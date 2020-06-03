@@ -1,0 +1,327 @@
+body {
+    padding: 0;
+    margin: 0;
+    background: #fff;
+  }
+
+  /* ---------------------------------------------
+                   NAV BAR
+--------------------------------------------- */
+
+  .navbar {
+    background:#ffff;
+  }
+  .nav-link,
+  .navbar-brand {
+    color: rgb(99, 99, 99);
+    cursor: pointer;
+  }
+  .nav-link {
+    margin-right: 1em !important;
+  }
+  .nav-link:hover {
+    color: #4dbdeb;
+  }
+  .navbar-collapse {
+    justify-content: flex-end;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url('/img/iconbarblack.png');
+  }
+
+/* ---------------------------------------------
+                   HEADER
+--------------------------------------------- */
+
+  header {
+    position: relative;
+    background-color: black;
+    height: 75vh;
+    min-height: 25rem;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%); 
+    transform: translateX(-50%) translateY(-50%);
+  }  
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5; 
+    z-index: 0;
+  }
+  
+  @media (pointer: coarse) and (hover: none) {
+    header {
+      background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+    }
+    header video {
+      display: none;
+    }
+  }
+
+  .description {
+    /* left: 40%; */
+    /* margin-left: 60px; */
+    position: absolute;
+    top: 35%;
+    /* transform: translate(-50%, -55%); */
+    text-align: center;
+    padding-right: 80px;
+    padding-left: 120px;
+  }
+  .description h1 {
+    color: #77d7fd;
+    font-size: 60px;
+
+  }
+
+  .description p {
+    color: #fcbb32;
+    font-size: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .description button {
+    border:3px solid #ffff;
+    /* background:#fcbb32; */
+    border-radius: 2;
+    color:#fff;
+    font-size: 30px;
+  }
+  .description button:hover {
+    border:3px solid #fcbb32;
+    background:#fcbb32;
+    color:#000;
+  }
+
+  @media (max-width: 575.98px) {
+
+    .description {
+      left: 0;
+
+      padding-right: 1px;
+      padding-left: 1px;
+      position: absolute;
+      top: 10%;
+      transform: none;
+      text-align: center;
+    }
+    
+    .description h1 {
+      font-size: 60px;
+    }
+    
+    
+    .features {
+      margin: 0;
+    }
+  
+  }
+
+/* ---------------------------------------------
+                   COLUMNS
+--------------------------------------------- */
+  .tittle-con{
+    font-size: 40px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: rgb(70, 70, 70);
+    background-color: rgb(252,187,50,0.2);
+  }
+
+  /* .tittle-con::after {
+    content: "";
+    width: 100px;
+    position: absolute;
+    margin: 0 auto;
+    height: 3px;
+    background: #4dbdeb;
+    left: 0;
+    right: 0;
+    bottom: -140px;
+  } */
+
+  .tittle-test{
+    font-size: 40px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: rgb(70, 70, 70);
+  }
+
+  .features {
+    padding: 1em;
+    position: relative;
+    background-color: rgb(252,187,50,0.1);
+  }
+
+  .features-test {
+    padding: 1em;
+    position: relative;
+  }
+
+  .feature-title {
+    color: #333;
+    text-align: center;
+  }
+
+  .feature-text{
+    font-size: 20px;
+  }
+
+
+  .features img {
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    margin-bottom: 16px;
+  }
+
+/* ---------------------------------------------
+                   TESTIMONIALS
+--------------------------------------------- */
+
+h2 {
+	color: #333;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: "Roboto", sans-serif;
+	font-weight: bold;
+	position: relative;
+	margin: 25px 0 50px;
+}
+/* h2::after {
+	content: "";
+	width: 100px;
+	position: absolute;
+	margin: 0 auto;
+	height: 3px;
+	background: #4dbdeb;
+	left: 0;
+	right: 0;
+	bottom: -10px;
+} */
+.carousel {
+	width: 650px;
+	margin: 0 auto;
+  padding-bottom: 50px;
+  /* padding-right: 20px;
+  padding-left: 20px; */
+}
+.carousel .item {
+	color: rgb(70, 70, 70);;
+	font-size: 18px;
+    text-align: center;
+	overflow: hidden;
+    min-height: 340px;
+}
+.carousel .item a {
+	color: #eb7245;
+}
+.carousel .img-box {
+	width: 245px;
+	height: 245px;
+	margin: 0 auto;
+	border-radius: 50%;
+}
+.carousel .img-box img {
+	width: 100%;
+	height: 100%;
+	display: block;
+	border-radius: 50%;
+}
+.carousel .testimonial {	
+	padding: 30px 0 10px;
+}
+.carousel .overview {	
+	text-align: center;
+	padding-bottom: 5px;
+}
+.carousel .overview b {
+	color: #333;
+	font-size: 15px;
+	text-transform: uppercase;
+	display: block;	
+	padding-bottom: 5px;
+}
+.carousel .star-rating i {
+	font-size: 18px;
+	color: #ffdc12;
+}
+.carousel .carousel-control {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+    background: #999;
+    text-shadow: none;
+	top: 4px;
+}
+.carousel-control i {
+	font-size: 20px;
+	margin-right: 2px;
+}
+.carousel-control.left {
+	left: auto;
+	right: 40px;
+}
+.carousel-control.right i {
+	margin-right: -2px;
+}
+.carousel .carousel-indicators {
+	bottom: 15px;
+}
+.carousel-indicators li, .carousel-indicators li.active {
+	width: 11px;
+	height: 11px;
+	margin: 1px 5px;
+	border-radius: 50%;
+}
+.carousel-indicators li {	
+	background: #e2e2e2;
+	border-color: transparent;
+}
+.carousel-indicators li.active {
+	border: none;
+	background: #888;		
+}
+
+@media (max-width: 575.98px) {
+
+.carousel {
+  width: auto;
+  }
+
+}
+/* ---------------------------------------------
+                   FOOTER
+--------------------------------------------- */
+
+  .page-footer {
+    background-color: #222;
+    color: #ccc;
+    padding: 60px 0 30px;
+  }
+  .footer-copyright {
+    color: #666;
+    padding: 40px 0;
+  }
