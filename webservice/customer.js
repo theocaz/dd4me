@@ -2,10 +2,10 @@ var customer = {
     firstName:"",
     lastName:"",
     phone:"",
-    pickupFrom:"",
-    goingTo:"",
+    rideCode:"",
     fullName: function(){
         return this.firstName + " " + this.lastName;
     }
+
     
 };

@@ -5,6 +5,9 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 9000;
+//import customer.js as an obj
+//var customer = require('customer.js'); not correct yet
+
 
 //client has location - manually choses where they are going
 //server does request to mapbox
@@ -42,9 +45,18 @@ app.get('/redlightcam/', async(req, res) =>{
 });
 
 app.get('/rideRequest/', async(req, res) => {
+	let startAddress;
+	let endAddress;
+	//multiple address dropoffs possible solution : loop to add however many there are?
+	//-----------------------------------------
+
+	let customer = new Customer; //new customer obj?
+
 	var calculateRoute = funtcion(),{
 
 };
+
+	var sendRequestToDriver; //function
 });
 
 
