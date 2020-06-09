@@ -135,8 +135,58 @@ body {
   }
 
 /* ---------------------------------------------
+                   LOGIN
+--------------------------------------------- */
+  .backimglogin{
+    background-image: url('/img/login.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 25px;
+    color: #fff;
+    /* background-color: rgb(	252, 187, 50,.1); */
+  }
+
+  .bi{
+    color: #fcbb32;
+  }
+
+  .subtext{
+    font-size: 15px;
+  }
+
+  .logmargin {
+    margin-left: 50px;
+  }
+
+  .text-center .btn{
+    margin-top: 30px;
+    border:3px solid #fcbb32;
+    background:#fcbb32;
+    color:#000;
+  }
+
+  .text-center .btn:hover {
+    border:3px solid #4dbdeb;
+    background:#4dbdeb;
+    color:#fff;
+  }
+
+  .appback{
+    background-color: rgb(151, 150, 150,.1);
+  }
+
+  @media (max-width: 575.98px) {
+    .col-md-10 {
+      margin-left: 10px;
+    }
+    
+  }
+
+  /* ---------------------------------------------
                    COLUMNS
 --------------------------------------------- */
+
   .tittle-con{
     font-size: 30px;
     text-align: center;
@@ -160,7 +210,7 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
     color: rgb(70, 70, 70);
-    background-color: rgb(	252, 187, 50,.1);;
+    background-color: rgb(	252, 187, 50,.1);
   }
 
   .tittle-account{
@@ -201,6 +251,7 @@ body {
     .feature-text-drive{
       font-size: 14px;
     }
+    
   }
 
   .features-driver {
@@ -216,6 +267,8 @@ body {
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
     margin-bottom: 16px;
   }
+
+
 
 /* ---------------------------------------------
                    TESTIMONIALS
