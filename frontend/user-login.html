@@ -8,6 +8,8 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 
@@ -19,8 +21,8 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
     crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/main.js"></script>
     <title>DD4me - Login</title>
 </head>
 <body>
@@ -66,7 +68,7 @@
                 <div class="tittle-account">
                     Sign Into Your Account 
                  </div>
-                <form>
+                <form id="createAccountForm">
                     <div class="form-group col-md-10 logmargin">
                       <label for="Email">Your Email</label>
                       <input type="email" class="form-control" id="InputEmail" aria-describedby="emailarea" >
@@ -85,6 +87,7 @@
                         <a href="#" class="alert-link"> I forgot my password</a>
                       </div><br>
                 </form>
+                
               </div>
               <div class="col">
  

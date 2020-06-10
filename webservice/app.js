@@ -35,7 +35,13 @@ app.get('/geo/', async(req,res) =>{
 app.listen(port, () => {
 	console.log(`listening on port: ${port}`);
 });
-
+app.get('/signup', (req, res) => {
+	console.log(req);
+	res.send(req);
+})
+app.get('/', (req, res) => res.send('Hello World!')); 
+app.get('/about', (req, res) => res.send('About')); 
+app.get('/about/sample', (req, res) => res.send('Sample About'));
 
 app.get('/redlightcam/', async(req, res) =>{
 	let rlc = await axios.get('https://services.arcgis.com/G6F8XLCl5KtAlZ2G/arcgis/rest/services/Red_Light_Camera_Violations_2019/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json');
@@ -44,19 +50,27 @@ app.get('/redlightcam/', async(req, res) =>{
 	res.json(rlc.data);
 });
 
-app.get('/rideRequest/', async(req, res) => {
+app.get('/rideRequest/', async(req, res) => { //get variables
 	let startAddress;
 	let endAddress;
 	//multiple address dropoffs possible solution : loop to add however many there are?
 	//-----------------------------------------
 
-	let customer = new Customer; //new customer obj?
+	//let customer = new Customer; //new customer obj?
 
-	var calculateRoute = funtcion(),{
+	var calcRoute = function(){
+		console.log("in calcRoute");
+	}
 
-};
+	var sendRequestToDriver = function(){
+		//----
+		console.log("in send request to driver");
 
-	var sendRequestToDriver; //function
+		//if accepted- makeNewRoute
+		//else - send to other driverp
+	}; //function
+	//calcRoute();
+	res.send("ride request");
 });
 
 
