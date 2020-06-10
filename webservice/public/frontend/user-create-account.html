@@ -8,6 +8,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 
@@ -19,8 +20,9 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
     crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/main.js"></script>
+    <script src='js/createAccount.js'></script>
     <title>DD4me - Create Account</title>
 </head>
 <body>
@@ -82,35 +84,33 @@
                 <div class="tittle-account">
                     Create Your Account Fast And Free! 
                  </div>
-                <form>
+                <form id='createAccountForm'>
                     <div class="form-group col-md-10 logmargin">
                       <label for="Email">Your Best Email</label>
-                      <input type="email" class="form-control" id="InputEmail" aria-describedby="emailarea" >
+                      <input type="email" class="form-control" id="InputEmail" name="email" aria-describedby="emailarea" >
                     </div>
                     <div class="form-group col-md-10 logmargin">
                         <label for="Name">Your Name And Last Name</label>
-                        <input type="name" class="form-control" id="InputName" aria-describedby="namearea" >
+                        <input type="name" class="form-control" id="InputName" name="name" aria-describedby="namearea" >
                     </div>
                     <div class="form-group col-md-10 logmargin">
                         <label for="Phone">Your Phone</label>
-                        <input type="tel" class="form-control" id="InputPhone" aria-describedby="phonearea" >
+                        <input type="tel" class="form-control" id="InputPhone" name="phone" aria-describedby="phonearea" >
                     </div>
                     <div class="form-group col-md-10 logmargin">
                         <label for="Pass">Your Password</label>
-                        <input type="password" class="form-control" id="InputPass" aria-describedby="passarea">
+                        <input type="password" class="form-control" id="InputPass" name="pass" aria-describedby="passarea">
                     </div>
 
                     <div class="form-check col-md-10 logmargin">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1" name="chkbox">
                       <label class="form-check-label" for="exampleCheck1">I accept the service conditions</label>
                     </div>
-                    <div class="col text-center"><button type="submit" class="btn" onclick="createAccount()">Create Account</button></div>
+                    <div class="col text-center"><button type="submit" class="btn">Create Account</button></div>
                     <div >
                         Do you have account? <a href="#" class="alert-link"> Login Here</a>
                       </div>
                 </form>
-                <button id="getdata">GET DATA</button>
-                <button id="postdata">POST DATA</button>
               </div>
             </div>
         </div>

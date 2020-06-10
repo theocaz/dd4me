@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 9000;
+const bodyParser = require('body-parser');
 //import customer.js as an obj
 //var customer = require('customer.js'); not correct yet
 
@@ -15,9 +16,10 @@ const port = 9000;
 //fetch requests every ~5 sec to check if ride was accepted
 //database ride selected feature - driver accepts it and client gets feedback somehow
 
-
+app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public/frontend')));
+
 
 app.use(cookieParser());
 app.use(express.json());
@@ -71,6 +73,12 @@ app.get('/rideRequest/', async(req, res) => { //get variables
 	}; //function
 	//calcRoute();
 	res.send("ride request");
+});
+
+app.post('/api/createAccount/', async(req, res) => {
+	let email =	req.body.email;
+	console.log(req);
+	//console.log(email);
 });
 
 
