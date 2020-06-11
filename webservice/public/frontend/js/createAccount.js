@@ -12,8 +12,11 @@ myForm.addEventListener('submit', function (e) {
 
     fetch('/api/createAccount', {
         method: 'post',
-        body: JSON.stringify(formData)
-    })
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(accountData)
+    });
 });
 
 });

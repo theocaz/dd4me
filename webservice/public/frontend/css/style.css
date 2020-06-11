@@ -28,7 +28,7 @@ body {
   }
 
   .navbar-toggler-icon {
-    background-image: url('/img/iconbarblack.png');
+    background-image: url('img/iconbarblack.png');
   }
 
 /* ---------------------------------------------
@@ -138,7 +138,7 @@ body {
                    SIGN UP
 --------------------------------------------- */
   .backimglogin{
-    background-image: url('/img/login.jpg');
+    background-image: url('img/login.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

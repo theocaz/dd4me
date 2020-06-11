@@ -66,7 +66,7 @@ app.get('/rideRequest/', async(req, res) => { //get variables
 
 	var sendRequestToDriver = function(){
 		//----
-		console.log("in send request to driver");
+		console.log("in send request to driver func");
 
 		//if accepted- makeNewRoute
 		//else - send to other driverp
@@ -76,9 +76,16 @@ app.get('/rideRequest/', async(req, res) => { //get variables
 });
 
 app.post('/api/createAccount/', async(req, res) => {
-	let email =	req.body.email;
-	console.log(req);
-	//console.log(email);
+	let data = req.body;
+	console.log(data);
+	let email =	data.email;
+	let pass = data.password;
+	let fname = data.fname;
+	let lname = data.lname;
+	let phone = data.phone;
+	console.log(req.body);
+	console.log(email);
+	//send to db
 });
 
 
