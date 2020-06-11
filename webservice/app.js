@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
@@ -6,6 +7,12 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = 9000;
 const bodyParser = require('body-parser');
+
+//Stripe public a secret keys
+let Public_Key = process.env.PUBLICKEY;
+let Secret_Key = 'sk_test_qZSvHS1T0dhkLg9lkI2Juiw200KGZPLFPu';//process.env.SECRETKEY;
+
+const stripe = require('stripe')(Secret_Key);
 //import customer.js as an obj
 //var customer = require('customer.js'); not correct yet
 
@@ -18,8 +25,7 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
-app.use('/', express.static(path.join(__dirname, 'public/frontend')));
-
+app.use('/',express.static(path.join(__dirname, 'public')));
 
 app.use(cookieParser());
 app.use(express.json());
@@ -41,7 +47,8 @@ app.get('/signup', (req, res) => {
 	console.log(req);
 	res.send(req);
 })
-app.get('/', (req, res) => res.send('Hello World!')); 
+app.get('/', (req, res) => res.render('index'));
+
 app.get('/about', (req, res) => res.send('About')); 
 app.get('/about/sample', (req, res) => res.send('Sample About'));
 
@@ -79,6 +86,34 @@ app.post('/api/createAccount/', async(req, res) => {
 	let email =	req.body.email;
 	console.log(req);
 	//console.log(email);
+});
+
+//Stripe Payment Module
+
+app.post('/payment', (req,res) =>{
+   
+    stripe.customers.create({         
+            email: req.body.stripeEmail,
+            name:req.body.stripeBillingName,
+            card: req.body.stripeToken,    
+          })
+          .then((customer) =>{
+            return stripe.charges.create({
+              amount:1055,
+              description: "Driver Ride",
+              currency: "cad",
+              customer: customer.id
+            });
+          })
+          .then((charge) => {
+            res.render('payment');
+            console.log(charge);
+          })
+          .catch((err) => {
+              res.send(err)
+              console.log("Stripe Error:", err);
+          });
+    
 });
 
 
