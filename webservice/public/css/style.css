@@ -1,8 +1,13 @@
+@font-face {
+  font-family: myFont;
+  src: url(/fonts/MicroFLF.ttf);
+}
+
 body {
     padding: 0;
     margin: 0;
     background: #fff;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: myFont;
   }
 
   /* ---------------------------------------------
@@ -19,6 +24,8 @@ body {
   }
   .nav-link {
     margin-right: 1em !important;
+    font-weight: bold;
+    font-size: 20px;
   }
   .nav-link:hover {
     color: #4dbdeb;
