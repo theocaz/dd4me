@@ -17,7 +17,6 @@ let Secret_Key = 'sk_test_qZSvHS1T0dhkLg9lkI2Juiw200KGZPLFPu';//process.env.SECR
 
 const stripe = require('stripe')(Secret_Key);
 //import customer.js as an obj
-//var customer = require('customer.js'); not correct yet
 
 
 //client has location - manually choses where they are going
