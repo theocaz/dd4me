@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = 9000;
 const bodyParser = require('body-parser');
+const User = require('./model/user');
+const db = require('./dbConn/db');
+const login = require("./middleware/login");
 //import customer.js as an obj
 //var customer = require('customer.js'); not correct yet
 
@@ -18,8 +21,9 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
-app.use('/', express.static(path.join(__dirname, 'public/frontend')));
+app.use(login);
 
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use(cookieParser());
 app.use(express.json());
@@ -34,9 +38,7 @@ app.get('/geo/', async(req,res) =>{
 	res.json(geocode.data.data.geo);
 });
 
-app.listen(port, () => {
-	console.log(`listening on port: ${port}`);
-});
+
 app.get('/signup', (req, res) => {
 	console.log(req);
 	res.send(req);
@@ -75,18 +77,46 @@ app.get('/rideRequest/', async(req, res) => { //get variables
 	res.send("ride request");
 });
 
+app.post(('/api/logout/', async(req,res)=>{
+	document.cookie = 'email' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+	document.cookie = 'ph' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+	res.send('hello');
+}))
+
+app.post(('/api/login/', async(req, res)=>{
+
+	res.json(req.user);
+}));
 app.post('/api/createAccount/', async(req, res) => {
 	let data = req.body;
 	console.log(data);
-	let email =	data.email;
-	let pass = data.password;
-	let fname = data.fname;
-	let lname = data.lname;
-	let phone = data.phone;
-	console.log(req.body);
-	console.log(email);
+	let user = {
+		email: data.email,
+		pass: data.password,
+		fname: data.fname,
+		lname: data.lname,
+		phone: data.phone,
+	};
+	console.log(user);
+	let userResult = await User.createUser(user);
+	if(userResult.status){
+
+		let loginResult = await User.loginUserWithPass(user.email, user.pass);
+		if(loginResult.status){
+			res.cookie('email', user.email, {maxAge:1000 *60 *60 *24});
+			res.cookie('ph', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24});
+		}
+
+	}else{
+		//did not work
+	}
+	res.json(user);
 	//send to db
 });
 
 
 
+app.listen(port, () => {
+	db.init();
+	console.log(`listening on port: ${port}`);
+});
