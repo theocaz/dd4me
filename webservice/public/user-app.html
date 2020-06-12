@@ -40,16 +40,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Clients</a>
+                    <a class="nav-link" href="/user-login.html">Clients</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Drivers</a>
+                    <a class="nav-link" href="/driver-login.html">Drivers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact Us</a>
+                    <a class="nav-link" href="/contactus.html">Contact Us</a>
                 </li>
             </ul>
         </div>
@@ -100,9 +100,27 @@
                  <div >
                     <img src="/img/map.gif" class="img-fluid"/>
                   </div>
-                <form>
+                  <form action="payment" method="POST">
+                    <script
+                          src="https://checkout.stripe.com/checkout.js"
+                          class="stripe-button"
+                          data-key="pk_test_WYWqrNU5yRJFjMjKkPQ2wmsH00o7fCc5lG"
+                          data-allow-remember-me="true"
+                          data-name="DD4me"
+                          data-description="Designated Driver Ride"
+                          data-amount="1055"
+                          data-image="img/logo.jpg"
+                          data-label="Buy this Product!"
+                          data-panel-label="Purchase"
+                          >
+                      </script>
+                      <script>
+                      // Hide default stripe button.
+                      document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                  </script>
+                  
                     <div class="col text-center"><button type="submit" class="btn">Order Your Driver</button></div>
-                  </form>
+                
               </div>
             </div>
         </div>
