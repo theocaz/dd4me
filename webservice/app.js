@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 const User = require('./model/user');
 const db = require('./dbConn/db');
 const login = require("./middleware/login");
+let accessToken =
+	'pk.eyJ1IjoidGhlb2NheiIsImEiOiJja2EyaXBudm4wNzVwM2Vtc2JyYWdxbzR2In0.RTa6vNKcqbOV9W9dOmybew';
 
 //Stripe public a secret keys
 let Public_Key = process.env.PUBLICKEY;
@@ -30,10 +32,38 @@ app.use(cors());
 app.use(login);
 app.use('/',express.static(path.join(__dirname, 'public')));
 
-app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use(cookieParser());
 app.use(express.json());
+
+app.post('/api/getdirections', async (req, res) => {
+	//console.log(req);
+	let data = req.body;
+	console.log(data.coords)
+	let profile = data.profile;
+	let coords = data.coords;
+	let formatCoords;
+	for(let i=0;i<coords.length;i++){
+		formatCoords[i] = coords[i][0];
+		//formatCoords[i][1] = coords[i][1];
+		//formatCoords[i][3] = ";";
+	};
+	console.log(formatCoords);
+	//console.log(data);
+	let directions = await axios.post('https://api.mapbox.com/directions/v5/' + profile + '?access_token=' + accessToken,{
+		'Content-Type: application/x-www-form-urlencoded',
+		'coordinates=': coords
+		
+		 
+	});
+	//figure out how to include content type 
+	///{api_name}/5/mapbox/{profile}?access_token={your_access_token} HTTP/1.0
+	//
+	//
+	console.log(directions);
+	//res.send(directions);
+});
+
 
 app.get('/geo/', async(req,res) =>{
 	let ip = req.ip;
@@ -53,7 +83,7 @@ app.get('/signup', (req, res) => {
 app.get('/', (req, res) => res.render('index'));
 
 app.get('/about', (req, res) => res.send('About')); 
-app.get('/about/sample', (req, res) => res.send('Sample About'));
+
 
 app.get('/redlightcam/', async(req, res) =>{
 	let rlc = await axios.get('https://services.arcgis.com/G6F8XLCl5KtAlZ2G/arcgis/rest/services/Red_Light_Camera_Violations_2019/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json');
