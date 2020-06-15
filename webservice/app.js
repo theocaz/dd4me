@@ -32,7 +32,10 @@ app.use(cors());
 app.use(login);
 app.use('/',express.static(path.join(__dirname, 'public')));
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 app.use(cookieParser());
 app.use(express.json());
 
@@ -80,7 +83,7 @@ app.get('/signup', (req, res) => {
 	console.log(req);
 	res.send(req);
 })
-app.get('/', (req, res) => res.render('index'));
+
 
 app.get('/about', (req, res) => res.send('About')); 
 
@@ -153,6 +156,7 @@ app.post('/api/createAccount/', async(req, res) => {
 });
 
 //Stripe Payment Module
+
 
 app.post('/payment', (req,res) =>{
    
