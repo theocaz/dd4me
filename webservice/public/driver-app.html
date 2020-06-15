@@ -32,6 +32,10 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="js/map.js" type="application/javascript"></script>
+
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="js/main.js"></script>
     <title>DD4me - App Driver</title>
@@ -69,8 +73,12 @@
       </div>
     </nav>
 
+    <div id="map" class="map"></div>
+
     <div class="features-test">
       <div class="container">
+        
+
         <div class="row">
           <div class="col-lg-6">
             <div class="tittle-account">
