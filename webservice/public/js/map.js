@@ -10,7 +10,35 @@ let posMarker = new mapboxgl.Marker();
 let camMarkers = [];
 var popup = new mapboxgl.Popup({ offset: 25 }).setText();
 var dirControl;
+//for driver
+async function requestRide() {
+    //get email cookie
+    let email;
+    //get passhash for extra security
+    let originLat = dirControl.getOrigin().geometry.coordinates[1];
+    let originLng = dirControl.getOrigin().geometry.coordinates[0];
+    let destLat = dirControl.getDestination().geometry.coordinates[1];
+    let destLng = dirControl.getDestination().geometry.coordinates[0];
+    console.log(destLat);
+    console.log("nav", dirControl.getDestination().geometry.coordinates);
+    console.log("nav", dirControl.getOrigin().geometry.coordinates);
 
+    let response = await fetch('/api/requestride', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: email,
+            originLat: originLat,
+            originLng: originLng,
+            destLat: destLat,
+            destLng: destLng
+            
+        })
+    });
+    //window.location.replace('https://www.google.com/maps/search/?api=1&query=' + destination);
+}
 window.addEventListener('load', async() => {
     if (!mapboxgl.supported()) {
         alert('Your browser does not support Mapbox GL, please try a different browser or call us for assistance.');
@@ -42,7 +70,7 @@ window.addEventListener('load', async() => {
         });
     console.log("dir control" +dirControl);
     map.addControl(dirControl, 'top-left');
-
+    
     
     let response = await fetch('/api/getdirections', {
         method: 'post',
@@ -57,6 +85,7 @@ window.addEventListener('load', async() => {
     });
     console.log("resp" + response);
 
+    
 
     // map.addControl(new mapboxgl.NavigationControl());
 

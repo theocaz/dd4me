@@ -3,6 +3,19 @@ const crypto = require('crypto');
 
 module.exports = {
     
+    requestRide: async function(email, originLat, originLng, destLat, destLng){
+        let conn = await db.getConnection();
+        const result = await conn.query("INSERT INTO `dd4me`.`riderequest` (`email`, `originLat`, `originLng`, `destLat`,`destLng`) VALUES (?, ?, ?, ?, ?);",
+            [email, originLat, originLng, destLat, destLng]);
+
+        conn.end();
+        if (result.affectedRows === 1) {
+            return { status: true};
+        } else {
+            return { status: false };
+        };
+    },
+
     loginUserWithPass: async function(email, password){
         let conn = await db.getConnection();
         let passHash = crypto.createHash('sha1').update(password).digest('base64');

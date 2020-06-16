@@ -35,34 +35,40 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 
 app.use(cookieParser());
 app.use(express.json());
+ 
+// NOT IN USE - WILL REDIRECT TO GOOGLE MAPS FOR STEP BY STEP DIRECTIONS
+// app.post('/api/getdirections', async (req, res) => {
+// 	//console.log(req);
+// 	let data = req.body;
+// 	console.log(data.coords)
+// 	let profile = data.profile;
+// 	let coords = data.coords;
+// 	let formatCoords;
+// 	// for(let i=0;i<coords.length;i++){
+// 	// 	formatCoords[i] = coords[i][0];
+// 	// 	//formatCoords[i][1] = coords[i][1];
+// 	// 	//formatCoords[i][3] = ";";
+// 	// };
+// 	console.log(formatCoords);
+// 	//console.log(data);
+// 	// let directions = await axios.post('https://api.mapbox.com/directions/v5/' + profile + '?access_token=' + accessToken,{
+// 	// 	headers: {
+// 	// 		'Content-Type': 'application/x-www-form-urlencoded',
+// 	// 		'coordinates=': coords
+// 	// 	}
 
-app.post('/api/getdirections', async (req, res) => {
-	//console.log(req);
-	let data = req.body;
-	console.log(data.coords)
-	let profile = data.profile;
-	let coords = data.coords;
-	let formatCoords;
-	for(let i=0;i<coords.length;i++){
-		formatCoords[i] = coords[i][0];
-		//formatCoords[i][1] = coords[i][1];
-		//formatCoords[i][3] = ";";
-	};
-	console.log(formatCoords);
-	//console.log(data);
-	let directions = await axios.post('https://api.mapbox.com/directions/v5/' + profile + '?access_token=' + accessToken,{
-		'Content-Type: application/x-www-form-urlencoded',
-		'coordinates=': coords
-		
-		 
-	});
-	//figure out how to include content type 
-	///{api_name}/5/mapbox/{profile}?access_token={your_access_token} HTTP/1.0
-	//
-	//
-	console.log(directions);
-	//res.send(directions);
-});
+// 	// });
+
+// 	//send instructions to google
+// 	//https://www.google.com/maps/search/?api=1&query=47.5951518,-122.3316393
+
+// 	//figure out how to include content type 
+// 	///{api_name}/5/mapbox/{profile}?access_token={your_access_token} HTTP/1.0
+// 	//
+// 	//
+// 	//console.log(directions);
+// 	//res.send(directions);
+// });
 
 
 app.get('/geo/', async(req,res) =>{
@@ -92,29 +98,12 @@ app.get('/redlightcam/', async(req, res) =>{
 	res.json(rlc.data);
 });
 
-app.get('/rideRequest/', async(req, res) => { //get variables
-	let startAddress;
-	let endAddress;
-	//multiple address dropoffs possible solution : loop to add however many there are?
-	//-----------------------------------------
 
-	//let customer = new Customer; //new customer obj?
-
-	var calcRoute = function(){
-		console.log("in calcRoute");
-	}
-
-	var sendRequestToDriver = function(){
-		//----
-		console.log("in send request to driver func");
-
-		//if accepted- makeNewRoute
-		//else - send to other driverp
-	}; //function
-	//calcRoute();
-	res.send("ride request");
-});
-
+app.post(('api/requestride/', async(req, res)=>{
+	// get email from cookie
+	let data = req.body;
+	User.requestRide(data.email, data.originLat, data.originLng, data.destLat, data.destLng);
+}));
 app.post(('/api/logout/', async(req,res)=>{
 	document.cookie = 'email' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 	document.cookie = 'ph' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
