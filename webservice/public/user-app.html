@@ -20,7 +20,7 @@
     crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script src="js/rider.js"></script>
+    <script src="js/pricecal.js"></script>
     <title>DD4me - App User</title>
 </head>
 <body>
@@ -63,15 +63,15 @@
                 <div class="tittle-account">
                     Enter Your Ride Details 
                  </div>
-                <form class="appback"><br>
+                <form id="tripform" class="appback"><br>
                     <div class="form-group col-md-10 ">
                       <label for="Origin">Your Origin</label>
-                      <input class="form-control form-control-lg" type="text" placeholder="Ex: 123 Hollywodd St"> 
+                      <input class="form-control form-control-lg" name="origin" type="text" placeholder="Ex: 123 Hollywodd St"> 
                     </div>                 
 
                     <div class="form-group col-md-10 ">
                         <label for="Origin">Your Destination</label>
-                        <input class="form-control form-control-lg" type="text" placeholder=""> 
+                        <input class="form-control form-control-lg" name="destiny" type="text" placeholder=""> 
                     </div>
 
                     <div class="form-group col-md-6">
@@ -90,7 +90,7 @@
                       </div><br>
                     </form>
 
-
+                    
 
               </div>
               <div class="col-lg-6">
@@ -100,7 +100,7 @@
                  <div >
                     <img src="/img/map.gif" class="img-fluid"/>
                   </div>
-                  <form action="payment" method="POST">
+                  <form action="/payment.html" method="POST">
                     <script
                           src="https://checkout.stripe.com/checkout.js"
                           class="stripe-button"
@@ -119,7 +119,13 @@
                       document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                   </script>
                   
-                    <div class="col text-center"><button type="submit" class="btn">Order Your Driver</button></div>
+                  Price simulation: <input type="text" name="price" id="price" />
+                  
+                    <div class="col text-center"><button type="submit" id="btn" onclick="add()">Order Your Driver</button></div>
+
+                    <div >
+                        <button id="btn2">Test Button</button>
+                    </div>
                 
               </div>
             </div>
