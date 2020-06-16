@@ -12,9 +12,7 @@ var popup = new mapboxgl.Popup({ offset: 25 }).setText();
 var dirControl;
 //for driver
 async function requestRide() {
-    //get email cookie
-    let email;
-    //get passhash for extra security
+
     let originLat = dirControl.getOrigin().geometry.coordinates[1];
     let originLng = dirControl.getOrigin().geometry.coordinates[0];
     let destLat = dirControl.getDestination().geometry.coordinates[1];
@@ -29,7 +27,6 @@ async function requestRide() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            email: email,
             originLat: originLat,
             originLng: originLng,
             destLat: destLat,
@@ -71,7 +68,8 @@ window.addEventListener('load', async() => {
     console.log("dir control" +dirControl);
     map.addControl(dirControl, 'top-left');
     
-    
+    //step by step directions request -- not in use atm
+
     let response = await fetch('/api/getdirections', {
         method: 'post',
         headers: {
@@ -79,7 +77,7 @@ window.addEventListener('load', async() => {
         },
         body:JSON.stringify( {
             profile: 'mapbox/driving',
-            coords: [[-75.76551, 45.45808],[- 75.75243, 45.45951]],
+            coords: [[-75.76551, 45.45808],[-75.75243, 45.45951]],
             steps: true
         })
     });

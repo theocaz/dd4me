@@ -17,6 +17,8 @@ let accessToken =
 let Public_Key = process.env.PUBLICKEY;
 let Secret_Key = 'sk_test_qZSvHS1T0dhkLg9lkI2Juiw200KGZPLFPu';//process.env.SECRETKEY;
 
+app.use(cookieParser());
+app.use(express.json());
 const stripe = require('stripe')(Secret_Key);
 //import customer.js as an obj
 
@@ -32,47 +34,47 @@ app.use(cors());
 app.use(login);
 app.use('/',express.static(path.join(__dirname, 'public')));
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
-app.use(cookieParser());
-app.use(express.json());
+
  
-// NOT IN USE - WILL REDIRECT TO GOOGLE MAPS FOR STEP BY STEP DIRECTIONS
+// NOT IN USE - WILL REDIRECT TO GOOGLE MAPS FOR STEP BY STEP DIRECTIONS---------------------------
+
 // app.post('/api/getdirections', async (req, res) => {
 // 	//console.log(req);
 // 	let data = req.body;
-// 	console.log(data.coords)
 // 	let profile = data.profile;
 // 	let coords = data.coords;
-// 	let formatCoords;
-// 	// for(let i=0;i<coords.length;i++){
-// 	// 	formatCoords[i] = coords[i][0];
-// 	// 	//formatCoords[i][1] = coords[i][1];
-// 	// 	//formatCoords[i][3] = ";";
-// 	// };
-// 	console.log(formatCoords);
-// 	//console.log(data);
-// 	// let directions = await axios.post('https://api.mapbox.com/directions/v5/' + profile + '?access_token=' + accessToken,{
-// 	// 	headers: {
-// 	// 		'Content-Type': 'application/x-www-form-urlencoded',
-// 	// 		'coordinates=': coords
-// 	// 	}
+// 	let formatCoords = 'coordinates=';
+// 	coords.forEach(c => {
+// 		formatCoords += c[0] + ", " + c[1] +';'
+// 	});
+// 	formatCoords = formatCoords.substr(0, formatCoords.length-1);
 
-// 	// });
+// 	//'coordinates=-117.17282, 32.71204;-117.17288, 32.71225'
+
+// 	console.log(formatCoords);
+// 	//let directions = 
+// 	axios.post('https://api.mapbox.com/directions/v5/' + profile + '?access_token=' + accessToken,
+// 		formatCoords
+// 		,
+// 		{
+// 			headers: {
+// 				'Content-Type': 'application/x-www-form-urlencoded'
+// 			}
+// 		}
+// 	).then(r => {
+// 		console.log(r.data.routes);
+// 	}).catch(err => {
+// 		//console.log(err);
+// 		console.log(err.response);
+// 	})
+	
 
 // 	//send instructions to google
 // 	//https://www.google.com/maps/search/?api=1&query=47.5951518,-122.3316393
 
-// 	//figure out how to include content type 
-// 	///{api_name}/5/mapbox/{profile}?access_token={your_access_token} HTTP/1.0
-// 	//
-// 	//
-// 	//console.log(directions);
-// 	//res.send(directions);
 // });
-
+//-------------------------------------------------------------------------------------------------------
 
 app.get('/geo/', async(req,res) =>{
 	let ip = req.ip;
@@ -85,14 +87,6 @@ app.get('/geo/', async(req,res) =>{
 });
 
 
-app.get('/signup', (req, res) => {
-	console.log(req);
-	res.send(req);
-})
-
-
-app.get('/about', (req, res) => res.send('About')); 
-
 
 app.get('/redlightcam/', async(req, res) =>{
 	let rlc = await axios.get('https://services.arcgis.com/G6F8XLCl5KtAlZ2G/arcgis/rest/services/Red_Light_Camera_Violations_2019/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json');
@@ -102,21 +96,27 @@ app.get('/redlightcam/', async(req, res) =>{
 });
 
 
-app.post(('api/requestride/', async(req, res)=>{
+app.post('api/requestride/', async(req, res)=>{
 	// get email from cookie
 	let data = req.body;
-	User.requestRide(data.email, data.originLat, data.originLng, data.destLat, data.destLng);
-}));
-app.post(('/api/logout/', async(req,res)=>{
-	document.cookie = 'email' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-	document.cookie = 'ph' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-	res.send('hello');
-}))
+	console.log(req.user.user.userID);
+	//User.requestRide(req.user.user.userID, data.originLat, data.originLng, data.destLat, data.destLng);
+});
+app.post('/api/logout/', async(req,res)=>{
+	res.clearCookie('uid');
+	res.clearCookie('ph');
+	User.resetCookieHash(req.user.user.userID);
+	req.user = {status:false};
+	res.send('logged out');
+});
 
-app.post(('/api/login/', async(req, res)=>{
-
+app.post('/api/login/', async(req, res)=>{
+	//let user = req.body;
+	//let loginResult = await User.loginUserWithPass(user.email, user.password);
+	
 	res.json(req.user);
-}));
+});
+
 app.post('/api/createAccount/', async(req, res) => {
 	let data = req.body;
 	console.log(data);
@@ -133,7 +133,7 @@ app.post('/api/createAccount/', async(req, res) => {
 
 		let loginResult = await User.loginUserWithPass(user.email, user.pass);
 		if(loginResult.status){
-			res.cookie('email', user.email, {maxAge:1000 *60 *60 *24});
+			res.cookie('uid', user.userID, { maxAge: 1000 * 60 * 60 * 24 });
 			res.cookie('ph', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24});
 		}
 
