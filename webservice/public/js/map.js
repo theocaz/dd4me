@@ -18,10 +18,7 @@ async function requestRide() {
     let destLat = dirControl.getDestination().geometry.coordinates[1];
     let destLng = dirControl.getDestination().geometry.coordinates[0];
     console.log(destLat);
-    console.log("nav", dirControl.getDestination().geometry.coordinates);
-    console.log("nav", dirControl.getOrigin().geometry.coordinates);
-
-    let response = await fetch('/api/requestride', {
+    let response = await fetch('api/requestride/', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -70,18 +67,18 @@ window.addEventListener('load', async() => {
     
     //step by step directions request -- not in use atm
 
-    let response = await fetch('/api/getdirections', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify( {
-            profile: 'mapbox/driving',
-            coords: [[-75.76551, 45.45808],[-75.75243, 45.45951]],
-            steps: true
-        })
-    });
-    console.log("resp" + response);
+    // let response = await fetch('/api/getdirections', {
+    //     method: 'post',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body:JSON.stringify( {
+    //         profile: 'mapbox/driving',
+    //         coords: [[-75.76551, 45.45808],[-75.75243, 45.45951]],
+    //         steps: true
+    //     })
+    // });
+    // console.log("resp" + response);
 
     
 

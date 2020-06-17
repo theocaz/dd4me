@@ -7,6 +7,9 @@ module.exports = async(req, res, next) => {
         if (req.user.status) {
             res.cookie('uid', req.user.user.userID, { maxAge: 1000 * 60 * 60 * 24 });
             res.cookie('ph', req.user.cookieHash, { maxAge: 1000 * 60 * 60 * 24 });
+            if(req.user.user.type === 'driver'){
+                res.cookie('driver', 'true', { maxAge: 1000 * 60 * 60 * 24 });
+            }
         }
 
     }else if(req.cookies.uid !== undefined && 

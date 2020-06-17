@@ -3,10 +3,10 @@ const crypto = require('crypto');
 
 module.exports = {
     
-    requestRide: async function(email, originLat, originLng, destLat, destLng){
+    requestRide: async function(uid, originLat, originLng, destLat, destLng){
         let conn = await db.getConnection();
         const result = await conn.query("INSERT INTO `dd4me`.`riderequest` (`email`, `originLat`, `originLng`, `destLat`,`destLng`) VALUES (?, ?, ?, ?, ?);",
-            [email, originLat, originLng, destLat, destLng]);
+            [uid, originLat, originLng, destLat, destLng]);
 
         conn.end();
         if (result.affectedRows === 1) {
@@ -28,7 +28,7 @@ module.exports = {
     loginUserWithPass: async function(email, password){
         let conn = await db.getConnection();
         let passHash = crypto.createHash('sha1').update(password).digest('base64');
-        const result = await conn.query("SELECT `userID`, `email`, `passHash` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
+        const result = await conn.query("SELECT `userID`, `email`, `passHash`, `type` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
             [email, passHash]);
         if(result[0] !== undefined){
             let cookieHash = crypto.createHash('sha1').update(Math.random().toString()).digest('base64');
@@ -46,7 +46,7 @@ module.exports = {
 
     loginUserWithCookie: async function(uid, cookieHash){
         const conn = await db.getConnection();
-        const result = await conn.query("SELECT `userID`, `email` FROM `dd4me`.`user` WHERE `userID`=? AND `cookieHash` = ?",
+        const result = await conn.query("SELECT `userID`, `email`, `type` FROM `dd4me`.`user` WHERE `userID`=? AND `cookieHash` = ?",
             [uid, cookieHash]);
 
         conn.end();
@@ -61,8 +61,8 @@ module.exports = {
         //console.log(user.pass);
         let passHash = crypto.createHash('sha1').update(user.pass).digest('base64');
         let conn = await db.getConnection();
-        const result = await conn.query("INSERT INTO `dd4me`.`user` (`email`, `fName`,`lName`, `passHash`) VALUES (?, ?, ?, ?);",
-        [user.email, user.fname, user.lname, passHash]);
+        const result = await conn.query("INSERT INTO `dd4me`.`user` (`email`, `fName`,`lName`, `passHash`, `type`) VALUES (?, ?, ?, ?, ?);",
+        [user.email, user.fname, user.lname, passHash, user.type]);
 
         conn.end();
         if(result.affectedRows === 1){

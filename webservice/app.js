@@ -8,6 +8,7 @@ const app = express();
 const port = 9000;
 const bodyParser = require('body-parser');
 const User = require('./model/user');
+const Trip = require('./model/trip');
 const db = require('./dbConn/db');
 const login = require("./middleware/login");
 let accessToken =
@@ -90,34 +91,45 @@ app.get('/geo/', async(req,res) =>{
 
 app.get('/redlightcam/', async(req, res) =>{
 	let rlc = await axios.get('https://services.arcgis.com/G6F8XLCl5KtAlZ2G/arcgis/rest/services/Red_Light_Camera_Violations_2019/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json');
-	//res.contentType('text/html');
-	//res.send(rlc.data);
+
 	res.json(rlc.data);
 });
 
 
+//ask lucas for help
 app.post('api/requestride/', async(req, res)=>{
 	// get email from cookie
-	let data = req.body;
+	console.log(req.cookies);
+	let tripRequest = req.body;
 	console.log(req.user.user.userID);
+	let tripResult = Trip.newRequest(tripRequest);
 	//User.requestRide(req.user.user.userID, data.originLat, data.originLng, data.destLat, data.destLng);
+	//ask driver if interested
+	res.send('ok');
 });
+
 app.post('/api/logout/', async(req,res)=>{
 	res.clearCookie('uid');
 	res.clearCookie('ph');
+	res.clearCookie('driver');
 	User.resetCookieHash(req.user.user.userID);
 	req.user = {status:false};
 	res.send('logged out');
 });
 
+//driver: while driver logged in --> looking for rides(check db for ride requests)
+
 app.post('/api/login/', async(req, res)=>{
-	//let user = req.body;
 	//let loginResult = await User.loginUserWithPass(user.email, user.password);
-	
+	console.log(req.user.user);
+	if(req.user.user.driver){
+		//login as driver
+	}
 	res.json(req.user);
 });
 
-app.post('/api/createAccount/', async(req, res) => {
+
+app.post('/api/createAccount/', async(req, res) => { //riders
 	let data = req.body;
 	console.log(data);
 	let user = {
@@ -126,6 +138,7 @@ app.post('/api/createAccount/', async(req, res) => {
 		fname: data.fname,
 		lname: data.lname,
 		phone: data.phone,
+		type: 'rider'
 	};
 	console.log(user);
 	let userResult = await User.createUser(user);
@@ -141,7 +154,7 @@ app.post('/api/createAccount/', async(req, res) => {
 		//did not work
 	}
 	res.json(user);
-	//send to db
+	
 });
 
 //Stripe Payment Module
