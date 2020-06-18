@@ -12,6 +12,7 @@ module.exports = {
         perKm = 0.85; // rate per kilometer
 
         tripFare = minutes * perMinute + km * perKm;
+        
         totalFare = tripFare + baseFare;
         if(totalFare < minimumFare){ // if smaller than min, change to min
             totalFare = minimumFare;
