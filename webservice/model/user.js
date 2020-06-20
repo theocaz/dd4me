@@ -61,8 +61,8 @@ module.exports = {
         //console.log(user.pass);
         let passHash = crypto.createHash('sha1').update(user.pass).digest('base64');
         let conn = await db.getConnection();
-        const result = await conn.query("INSERT INTO `dd4me`.`user` (`email`, `fName`,`lName`, `passHash`, `type`) VALUES (?, ?, ?, ?, ?);",
-        [user.email, user.fname, user.lname, passHash, user.type]);
+        const result = await conn.query("INSERT INTO `dd4me`.`user` (`email`, `fName`,`lName`, `passHash`, `type`, `phone`) VALUES (?, ?, ?, ?, ?, ?);",
+        [user.email, user.fname, user.lname, passHash, user.type, user.phone]);
 
         conn.end();
         if(result.affectedRows === 1){
@@ -70,6 +70,73 @@ module.exports = {
             return {status: true, user:user}; 
         }else{
             return {status: false};
+        }
+    },
+
+    lookupUser: async function(uid){
+        const conn = await db.getConnection();
+        const result = await conn.query("SELECT `fName`, `lName`, `phone` FROM `dd4me`.`user` WHERE `userID`=?",
+            [uid]);
+
+        conn.end();
+        if (result[0] !== undefined) {
+            return { status: true, user: result[0]};
+        }else{
+            return {status : false}
+        }
+    },
+
+    toggleShift: async function(user){
+        console.log(user.onShift);
+        const conn = await db.getConnection();
+        let result = await conn.query("UPDATE `user` SET `onShift` = ?, `shiftType` = ?, `inTeam`= ? WHERE `userID` = ? AND `cookieHash` = ?;",
+            [user.onShift, user.shiftType, 'false', user.userID, user.ch]);
+
+        conn.end();
+        
+        if (result[0] !== undefined) {
+            return { status: true };
+        } else {
+            return { status: false }
+        }
+    },
+
+    getOnShiftAll: async function(){
+        const conn = await db.getConnection();
+        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType`, `inTeam` FROM `dd4me`.`user` WHERE `onShift`=?",
+            ["true"]);
+
+        conn.end();
+        if (result[0] !== undefined) {
+            return { status: true, driver: result };
+        } else {
+            return { status: false }
+        }
+    },
+    
+    getOnShiftPrimary: async function(){
+        const conn = await db.getConnection();
+        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType`, `inTeam` FROM `dd4me`.`user` WHERE `onShift`=? AND `shiftType` = ?",
+            ["true", "primary"]);
+
+        conn.end();
+        if (result[0] !== undefined) {
+            return { status: true, primaryDriver: result };
+        } else {
+            return { status: false }
+        }
+    },
+    
+    getOnShiftSecondary: async function(){
+        const conn = await db.getConnection();
+        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType`, `inTeam` FROM `dd4me`.`user` WHERE `onShift`=? AND `shiftType` = ?",
+            ["true", "secondary"]);
+
+        conn.end();
+        if (result[0] !== undefined) {
+            return { status: true, secondaryDriver: result };
+        } else {
+            return { status: false }
         }
     }
 
