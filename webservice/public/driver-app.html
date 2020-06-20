@@ -34,10 +34,18 @@
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
-    <script src="js/map.js" type="application/javascript"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css"
+      type="text/css" />
+      <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+      <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
 
+    <script src="js/map.js" type="application/javascript"></script>
+    <script src="js/driver.js" type="application/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script src="js/main.js"></script>
+ 
     <title>DD4me - App Driver</title>
   </head>
   <body>
@@ -77,7 +85,14 @@
 
     <div class="features-test">
       <div class="container">
-        
+        <div id="shiftManageDiv">
+          <p id="onShiftDisplay">off shift</p>
+          <input type="checkbox" id="primaryDriverID" name="primaryDriver" value="primary">
+          <label for="vehicle1"> Primary Driver</label><br>
+          <input type="checkbox" id="secondaryDriverID" name="secondaryDriver" value="secondary">
+          <label for="vehicle2"> Secondary Driver</label><br>
+          <button id="onShiftToggle">Toggle shift</button>
+        </div>
 
         <div class="row">
           <div class="col-lg-6">
@@ -88,30 +103,17 @@
               <br />
               <div class="form-group col-md-10">
                 <label for="Origin">Your Origin</label>
-                <input
-                  class="form-control form-control-lg"
-                  type="text"
-                  placeholder="Ex: 123 Hollywodd St"
-                />
+                
               </div>
 
               <div class="form-group col-md-10">
                 <label for="Origin">Your Destination</label>
-                <input
-                  class="form-control form-control-lg"
-                  type="text"
-                  placeholder=""
-                />
+                
               </div>
 
               <div class="form-group col-md-6">
                 <label for="Departure">Departure Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="Inputdeparture"
-                  aria-describedby="deparea"
-                />
+                
               </div>
 
               <div class="form-group col-md-6">

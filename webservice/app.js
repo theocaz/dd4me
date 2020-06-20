@@ -82,9 +82,9 @@ app.get('/geo/', async(req,res) =>{
 	if(req.ip === ':::1' || req.ip === '::ffff:127.0.0.1'){
 		ip ='45.44.230.61';
 	}
-	let geocode = axios.get('https://tools.keycdn.com/geo.json?host=' +ip);
-	console.log(geocode.data.data);
-	res.json(geocode.data.data.geo);
+	let geocode = axios.get('https://tools.keycdn.com/geo.json?host=' +ip).catch(err => {console.log(err)});
+	//console.log(geocode.data.data);
+	res.json(); //error if inside - geocode.data.data.geo
 });
 
 
@@ -95,22 +95,52 @@ app.get('/redlightcam/', async(req, res) =>{
 	res.json(rlc.data);
 });
 
+//maybe restructure?----------------------
+// off shift error
+app.post('/api/shiftmanager/', async(req, res)=>{
+	
+	let data = req.body;
+	let driverCookies = req.cookies;
 
-//ask lucas for help
-app.post('api/requestride/', async(req, res)=>{
-	// get email from cookie
-	console.log(req.cookies);
-	let tripRequest = req.body;
-	console.log(req.user.user.userID);
-	let tripResult = Trip.newRequest(tripRequest);
-	//User.requestRide(req.user.user.userID, data.originLat, data.originLng, data.destLat, data.destLng);
-	//ask driver if interested
-	res.send('ok');
+	let response= {};
+	let result;
+	let user = {
+		userID : driverCookies.uid,
+		ch : driverCookies.ch,
+		onShift : data.onShift,
+		shiftType : data.shiftType,
+		inTeam : false
+	};
+	console.log(user.onShift);
+	//toggle shift
+	result = User.toggleShift(user);
+
+	
+	res.json(result);
+});
+
+
+app.post('/api/requestride/', async(req, res)=>{
+	console.log(req.user);
+	if(req.user.status){
+
+		let tripRequest = {...req.body,...req.user.user};
+
+		let tripResult = await Trip.newRequest(tripRequest);
+		
+		//ask driver if interested
+		console.log(tripResult);
+		res.json({'status':'ok'});
+	}else{
+		res.json({"status":"unauthorised"});
+	}
+	
+	
 });
 
 app.post('/api/logout/', async(req,res)=>{
 	res.clearCookie('uid');
-	res.clearCookie('ph');
+	res.clearCookie('ch');
 	res.clearCookie('driver');
 	User.resetCookieHash(req.user.user.userID);
 	req.user = {status:false};
@@ -147,7 +177,7 @@ app.post('/api/createAccount/', async(req, res) => { //riders
 		let loginResult = await User.loginUserWithPass(user.email, user.pass);
 		if(loginResult.status){
 			res.cookie('uid', user.userID, { maxAge: 1000 * 60 * 60 * 24 });
-			res.cookie('ph', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24});
+			res.cookie('ch', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24});
 		}
 
 	}else{
