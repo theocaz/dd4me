@@ -37,6 +37,8 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 
 
 
+
+
  
 // NOT IN USE - WILL REDIRECT TO GOOGLE MAPS FOR STEP BY STEP DIRECTIONS---------------------------
 
@@ -138,6 +140,8 @@ app.post('/api/requestride/', async(req, res)=>{
 	
 });
 
+
+
 app.post('/api/logout/', async(req,res)=>{
 	res.clearCookie('uid');
 	res.clearCookie('ch');
@@ -150,12 +154,23 @@ app.post('/api/logout/', async(req,res)=>{
 //driver: while driver logged in --> looking for rides(check db for ride requests)
 
 app.post('/api/login/', async(req, res)=>{
-	//let loginResult = await User.loginUserWithPass(user.email, user.password);
-	console.log(req.user.user);
-	if(req.user.user.driver){
+
+	console.log('I have a Login request');
+	console.log(req.body);
+	console.log(req.user);
+
+	
+	if(req.user.status){
+		console.log('Logeado');
+		res.json(req.user);
+	}else {
+		console.log('No Logeado');
+	} 
+	//if(req.user.user.driver){
 		//login as driver
-	}
-	res.json(req.user);
+	//}
+	//res.json(req.user);
+
 });
 
 
@@ -189,6 +204,17 @@ app.post('/api/createAccount/', async(req, res) => { //riders
 
 //Stripe Payment Module
 
+app.post('/pay', (req,res) =>{
+	console.log('I have a pay request');
+	console.log(req.body);
+	let data = req.body;
+	res.json({
+		status: "Success",
+		data,
+	});
+
+	let price = data.origin;
+	console.log('Precio: '+price);
 
 app.post('/payment', (req,res) =>{
    
@@ -199,7 +225,7 @@ app.post('/payment', (req,res) =>{
           })
           .then((customer) =>{
             return stripe.charges.create({
-              amount:1055,
+              amount:price,
               description: "Driver Ride",
               currency: "cad",
               customer: customer.id
@@ -214,6 +240,7 @@ app.post('/payment', (req,res) =>{
               console.log("Stripe Error:", err);
           });
     
+});
 });
 
 app.listen(port, () => {

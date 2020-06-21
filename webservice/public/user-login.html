@@ -23,7 +23,6 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="js/login.js"></script>
-    <script src="js/main.js"></script>
     <title>DD4me - Login</title>
 </head>
 <body>
@@ -79,8 +78,15 @@
                         <label for="Pass">Your Password</label>
                         <input type="password" class="form-control" id="InputPass" name="password" aria-describedby="passarea">
                     </div>
+                    
                     <input name="login" type="hidden" value="login"/> 
-                    <div class="col text-center"><button type="submit" class="btn">Sign In</button></div>
+                    <div class="col text-center">
+                        <p id="message" style="color: #0026ff"></p>
+                        <button type="submit" id="btnuser">Sign In</button>
+                    </div>
+                    <div class=" col-md-10 logmargin">
+                        <a href="#" class="alert-link" id="logoutBtn" value="logout"> Logout</a>
+                      </div><br>
                       <div class="col-md-10 logmargin">
                         Don't have an account? <a href="user-create-account.html" class="alert-link"> Sign Up</a>
                       </div><br>
@@ -88,7 +94,7 @@
                         <a href="#" class="alert-link"> I forgot my password</a>
                       </div><br>
                 </form>
-                <button id="logoutBtn" value="logout">Logout</button>
+                <!-- <button id="logoutBtn" value="logout">Logout</button> -->
               </div>
               <div class="col">
  
