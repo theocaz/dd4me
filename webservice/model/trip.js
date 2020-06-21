@@ -6,6 +6,8 @@ module.exports = {
     calcPrice: async function(trip){
         minutes = trip.minutes;
         km = trip.km;
+        // minutes = 2;
+        // km = 3;
         minimumFare = 20;
 
         baseFare = 5; //constant added to trips aka 'booking fee'
@@ -13,11 +15,11 @@ module.exports = {
         perKm = 0.85; // rate per kilometer
 
         tripFare = minutes * perMinute + km * perKm;
-
         totalFare = tripFare + baseFare;
         if(totalFare < minimumFare){ // if smaller than min, change to min
             totalFare = minimumFare;
         }
+        
         return totalFare;
     },
 

@@ -119,7 +119,7 @@ body {
   }
   .description h1 {
     color: #77d7fd;
-    font-size: 60px;
+    font-size: 50px;
 
   }
 
@@ -168,8 +168,18 @@ body {
 /* ---------------------------------------------
                    SIGN UP
 --------------------------------------------- */
-  .backimglogin{
+  .backimgloginuser{
     background-image: url('../img/login.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 25px;
+    color: #fff;
+    /* background-color: rgb(	252, 187, 50,.1); */
+  }
+
+  .backimglogindriver{
+    background-image: url('../img/logindriver.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -180,6 +190,10 @@ body {
 
   .bi{
     color: #fcbb32;
+  }
+
+  .bi2{
+    color: #4dbdeb;
   }
 
   .subtext{
