@@ -34,6 +34,7 @@
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+<<<<<<< Updated upstream
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
     <link rel="stylesheet"
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css"
@@ -41,11 +42,17 @@
       <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
       <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+=======
+    <script src="js/infotodriver.js" type="application/javascript"></script>
+>>>>>>> Stashed changes
 
     <script src="js/map.js" type="application/javascript"></script>
     <script src="js/driver.js" type="application/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+<<<<<<< Updated upstream
  
+=======
+>>>>>>> Stashed changes
     <title>DD4me - App Driver</title>
   </head>
   <body>
@@ -81,8 +88,6 @@
       </div>
     </nav>
 
-    <div id="map" class="map"></div>
-
     <div class="features-test">
       <div class="container">
         <div id="shiftManageDiv">
@@ -103,12 +108,12 @@
               <br />
               <div class="form-group col-md-10">
                 <label for="Origin">Your Origin</label>
-                
+                <p id="origin" style="color: #0026ff"></p>
               </div>
 
               <div class="form-group col-md-10">
                 <label for="Origin">Your Destination</label>
-                
+                <p id="destiny" style="color: #0026ff"></p>
               </div>
 
               <div class="form-group col-md-6">
@@ -149,29 +154,17 @@
              
               <div class="form-group col-md-10"><br>
                 <label for="Name">Customer Name</label>
-                <input
-                  class="form-control form-control-lg"
-                  type="text"
-                />
+                <p id="username" style="color: #0026ff"></p>
               </div>
 
               <div class="form-group col-md-10">
                 <label for="Origin">Customer Phone</label>
-                <input
-                  class="form-control form-control-lg"
-                  type="tel"
-                  placeholder=""
-                />
+                <p id="userphone" style="color: #0026ff"></p>
               </div>
 
               <div class="form-group col-md-10">
                 <label for="Departure">Customer Email</label><br>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="Inputdeparture"
-                  aria-describedby="deparea"
-                />
+                <p id="useremail" style="color: #0026ff"></p>
               </div>
               <br>
               </div>
