@@ -1,12 +1,5 @@
 window.onload = () => {
 
-
-    let origin = "ORIGIN";
-    document.getElementById("origin").innerHTML = origin;
-
-    let destination = "DESTINATION";
-    document.getElementById("destiny").innerHTML = destination;
-
     let name = "NAME";
     document.getElementById("username").innerHTML = name;
 
