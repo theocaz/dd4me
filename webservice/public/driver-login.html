@@ -22,7 +22,8 @@
     crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script src="js/login.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/driverlogin.js"></script>
     <title>DD4me - Login</title>
 </head>
 <body>
@@ -68,7 +69,7 @@
                 <div class="tittle-account">
                     Driver Sign In Account 
                  </div>
-                <form id="loginForm">
+                <form id="driverLogin">
                     <div class="form-group col-md-10 logmargin">
                       <label for="Email">Your Email</label>
                       <input type="email" class="form-control" id="InputEmail" name="email" aria-describedby="emailarea" >
@@ -76,10 +77,10 @@
 
                     <div class="form-group col-md-10 logmargin">
                         <label for="Pass">Your Password</label>
-                        <input type="password" class="form-control" id="InputPass" name="password" aria-describedby="passarea">
+                        <input type="password" class="form-control" id="InputPass" name="password" naria-describedby="passarea">
                     </div>
 
-                    <div class="col text-center"><button type="submit" id="btndriver">Driver Sign In</button></div>
+                    <div class="col text-center"><button type="submit" class="btn">Driver Sign In</button></div>
                       <div class="col-md-10 logmargin">
                         Don't have an account? <a href="/driver-create-account.html" class="alert-link">Driver Sign Up</a>
                       </div><br>

@@ -3,6 +3,7 @@ const crypto = require('crypto');
 
 module.exports = {
     
+
     requestRide: async function(uid, originLat, originLng, destLat, destLng){
         let conn = await db.getConnection();
         const result = await conn.query("INSERT INTO `dd4me`.`riderequest` (`email`, `originLat`, `originLng`, `destLat`,`destLng`) VALUES (?, ?, ?, ?, ?);",
@@ -28,7 +29,7 @@ module.exports = {
     loginUserWithPass: async function(email, password){
         let conn = await db.getConnection();
         let passHash = crypto.createHash('sha1').update(password).digest('base64');
-        const result = await conn.query("SELECT `userID`, `email`, `passHash`, `type` , `fName`, `lName` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
+        const result = await conn.query("SELECT `userID`, `email`, `passHash`, `type` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
             [email, passHash]);
         if(result[0] !== undefined){
             let cookieHash = crypto.createHash('sha1').update(Math.random().toString()).digest('base64');
@@ -89,8 +90,8 @@ module.exports = {
     toggleShift: async function(user){
         console.log(user.onShift);
         const conn = await db.getConnection();
-        let result = await conn.query("UPDATE `user` SET `onShift` = ?, `shiftType` = ?, `inTeam`= ? WHERE `userID` = ? AND `cookieHash` = ?;",
-            [user.onShift, user.shiftType, 'false', user.userID, user.ch]);
+        let result = await conn.query("UPDATE `user` SET `onShift` = ?, `shiftType` = ?, `inTeam`= ?, `currLocationLat` =?, `currLocationLng` = ? WHERE `userID` = ? AND `cookieHash` = ?;",
+            [user.onShift, user.shiftType, 'false',user.locationLat, user.locationLng, user.userID, user.ch]);
 
         conn.end();
         
@@ -113,11 +114,33 @@ module.exports = {
             return { status: false }
         }
     },
+
+    getClosestOnShiftAll: async function (user) {
+        let wantedShiftType;
+        if(user.shiftType == "both"){
+            wantedShiftType = "'both', 'primary', 'secondary'";
+        } else if (user.shiftType == "primary"){
+            wantedShiftType = "'both', 'secondary'";
+        }else{
+            wantedShiftType = "'both', 'primary'";
+        }
+
+        const conn = await db.getConnection();
+        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType` FROM `dd4me`.`user` WHERE `inTeam` = false AND `onShift`= true AND `shiftType` IN (?) ORDER BY SQRT(POW(? - `currLocationLat`, 2) + POW(? - `currLocationLng`, 2))",
+            [wantedShiftType, user.locationLat, user.locationLng]);
+
+        conn.end();
+        if (result[0] !== undefined) {
+            return { status: true, driver: result[0] };
+        } else {
+            return { status: false }
+        }
+    },
     
     getOnShiftPrimary: async function(){
         const conn = await db.getConnection();
-        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType`, `inTeam` FROM `dd4me`.`user` WHERE `onShift`=? AND `shiftType` = ?",
-            ["true", "primary"]);
+        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType`, `inTeam` FROM `dd4me`.`user` WHERE `onShift`=? AND `shiftType` = ? OR `shiftType` = ?;",
+            ["true", "primary", "both"]);
 
         conn.end();
         if (result[0] !== undefined) {
@@ -129,8 +152,8 @@ module.exports = {
     
     getOnShiftSecondary: async function(){
         const conn = await db.getConnection();
-        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType`, `inTeam` FROM `dd4me`.`user` WHERE `onShift`=? AND `shiftType` = ?",
-            ["true", "secondary"]);
+        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType`, `inTeam` FROM `dd4me`.`user` WHERE `onShift`=? AND `shiftType` = ? OR `shiftType` = ?;",
+            ["true", "secondary", "both"]);
 
         conn.end();
         if (result[0] !== undefined) {

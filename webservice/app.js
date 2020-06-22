@@ -9,6 +9,7 @@ const port = 9000;
 const bodyParser = require('body-parser');
 const User = require('./model/user');
 const Trip = require('./model/trip');
+const Team = require('./model/team');
 const db = require('./dbConn/db');
 const login = require("./middleware/login");
 let accessToken =
@@ -79,6 +80,10 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 // });
 //-------------------------------------------------------------------------------------------------------
 
+pairTeam = async function() {
+
+};
+
 app.get('/geo/', async(req,res) =>{
 	let ip = req.ip;
 	if(req.ip === ':::1' || req.ip === '::ffff:127.0.0.1'){
@@ -103,7 +108,7 @@ app.post('/api/shiftmanager/', async(req, res)=>{
 	
 	let data = req.body;
 	let driverCookies = req.cookies;
-
+	console.log(data.locationLat);
 	let response= {};
 	let result;
 	let user = {
@@ -111,12 +116,15 @@ app.post('/api/shiftmanager/', async(req, res)=>{
 		ch : driverCookies.ch,
 		onShift : data.onShift,
 		shiftType : data.shiftType,
-		inTeam : false
+		inTeam : false,
+		locationLat: data.locationLat,
+		locationLng: data.locationLng
 	};
 	console.log(user.onShift);
 	//toggle shift
-	result = User.toggleShift(user);
+	result = await User.toggleShift(user);
 
+	teamResult = await Team.autoPairTeam();
 	
 	res.json(result);
 });

@@ -1,4 +1,4 @@
-
+const state = {};
 $(document).ready(function () {
     var onShift = false;
     var shiftType;
@@ -33,26 +33,32 @@ $(document).ready(function () {
             document.getElementById('onShiftDisplay').innerText = "Off shift";
 
         }
+        const location = await getLocation();
+        console.log(location.coords.latitude);
         let response = await fetch('/api/shiftmanager', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ onShift, shiftType })
+            body: JSON.stringify({ onShift, shiftType, locationLat: location.coords.latitude, locationLng : location.coords.longitude })
         });
         //check if response stauts is ok then update
         
         
     });
 
-    onShiftFunc = async function(){
-        while(onShift == true){
-            //look for team
-        
-        }
-        while(inTeam == true){
-            //look for trips
-        }
-    }
+
+    getLocation = function(){
+        return new Promise((resolve, reject) => {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            }
+            else{
+                reject("location is needed for the app to work");
+            }
+
+        });
+    };
+    
 
 });
