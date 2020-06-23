@@ -143,20 +143,22 @@ app.post('/api/requestride/', async(req, res)=>{
 		res.json({'status':'ok'});
 	}else{
 		res.json({"status":"unauthorised"});
-	}
-	
+	}	
 	
 });
-
-
 
 app.post('/api/logout/', async(req,res)=>{
 	res.clearCookie('uid');
 	res.clearCookie('ch');
+	res.clearCookie('name');
+	res.clearCookie('last');
+	res.clearCookie('phone');
+	res.clearCookie('email');
 	res.clearCookie('driver');
 	User.resetCookieHash(req.user.user.userID);
 	req.user = {status:false};
 	res.send('logged out');
+	res.json(req.user);
 });
 
 //driver: while driver logged in --> looking for rides(check db for ride requests)
@@ -166,7 +168,7 @@ app.post('/api/login/', async(req, res)=>{
 	console.log('I have a Login request');
 	console.log(req.body);
 	console.log(req.user);
-
+	console.log(req.cookies);
 	
 	if(req.user.status){
 		console.log('Logeado');
@@ -174,10 +176,6 @@ app.post('/api/login/', async(req, res)=>{
 	}else {
 		console.log('No Logeado');
 	} 
-	//if(req.user.user.driver){
-		//login as driver
-	//}
-	//res.json(req.user);
 
 });
 
@@ -185,13 +183,14 @@ app.post('/api/login/', async(req, res)=>{
 app.post('/api/createAccount/', async(req, res) => { //riders
 	let data = req.body;
 	console.log(data);
+	console.log(req.user);
 	let user = {
 		email: data.email,
 		pass: data.password,
 		fname: data.fname,
 		lname: data.lname,
 		phone: data.phone,
-		type: 'rider'
+		type: "rider",
 	};
 	console.log(user);
 	let userResult = await User.createUser(user);
@@ -199,15 +198,21 @@ app.post('/api/createAccount/', async(req, res) => { //riders
 
 		let loginResult = await User.loginUserWithPass(user.email, user.pass);
 		if(loginResult.status){
+
 			res.cookie('uid', user.userID, { maxAge: 1000 * 60 * 60 * 24 });
-			res.cookie('ch', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24});
+            res.cookie('name', user.fname, { maxAge: 1000 * 60 * 60 * 24 });
+            res.cookie('last', user.lname, { maxAge: 1000 * 60 * 60 * 24 });
+            res.cookie('email', user.email, { maxAge: 1000 * 60 * 60 * 24 });
+            res.cookie('phone', user.phone, { maxAge: 1000 * 60 * 60 * 24 });
+            res.cookie('ch', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24 });
+			
 		}
 
 	}else{
 		//did not work
 	}
-	res.json(user);
 	
+	res.json(data);
 });
 
 //Stripe Payment Module
@@ -221,7 +226,7 @@ app.post('/pay', (req,res) =>{
 		data,
 	});
 
-	let price = data.origin;
+	let price = data.money;
 	console.log('Precio: '+price);
 
 app.post('/payment', (req,res) =>{

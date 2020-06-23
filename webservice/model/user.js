@@ -29,7 +29,7 @@ module.exports = {
     loginUserWithPass: async function(email, password){
         let conn = await db.getConnection();
         let passHash = crypto.createHash('sha1').update(password).digest('base64');
-        const result = await conn.query("SELECT `userID`, `email`, `passHash`, `type` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
+        const result = await conn.query("SELECT `userID`, `email`, `passHash`, `type`, `fName`, `lName`, `phone` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
             [email, passHash]);
         if(result[0] !== undefined){
             let cookieHash = crypto.createHash('sha1').update(Math.random().toString()).digest('base64');

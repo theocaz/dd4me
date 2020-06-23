@@ -35,7 +35,8 @@
     
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/map.js" type="text/javascript"></script>
-    <script src="js/trip.js" type="text/javascript"></script>
+    <script src="js/cookieinfo.js" type="text/javascript"></script>
+    <script src="js/login.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -52,12 +53,24 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user-login.html">Clients</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/driver-login.html">Drivers</a>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                      Clients
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                      <a class="dropdown-item" href="/user-create-account.html">Sign Up</a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                      Drivers
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                      <a class="dropdown-item" href="/driver-create-account.html">Sign Up</a>
+                    </div>
+                  </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contactus.html">Contact Us</a>
                 </li>
@@ -72,18 +85,28 @@
             </div>
             <div class=" features col-lg-6 border rounded">
                 <div class="tittle-account">
-                    Your Ride
+                    <div class="form-group col-md-10">
+                        <label for="Name">Welcome On Board </label>
+                        <label id="username" style="color: #0026ff"></label>
+                      </div>
                 </div>
+
+
+                <form id="tripform" ><br>
+                    <div class="form-group col-md-10 ">
+                        <label for="Origin">Your Price</label>
+                        <input class="form-control form-control-lg" name="money" type="text">
+                    </div>
+                </form>
         
                 <div>
-                    <form action="payment" method="POST">
+                    <form action="/payment" method="POST">
                         <script src="https://checkout.stripe.com/checkout.js" 
                         class="stripe-button"
                         data-key="pk_test_WYWqrNU5yRJFjMjKkPQ2wmsH00o7fCc5lG" 
                         data-allow-remember-me="true"
                         data-name="DD4me" 
                         data-description="Designated Driver Ride" 
-                        
                         data-image="img/logo.jpg"
                         data-label="Buy this Product!" 
                         data-panel-label="Purchase">
@@ -93,9 +116,13 @@
                             document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                         </script>
 
+
                         <div class="col text-center"><button type="submit" id="btn">Order Your
                                 Driver</button></div>
                     </form>
+                    <div class=" col-md-10">
+                        <a href="/user-login.html" class="alert-link" id="logoutBtn" value="logout"> Logout</a>
+                      </div><br>
                 </div>
             </div>
             <div class="col">

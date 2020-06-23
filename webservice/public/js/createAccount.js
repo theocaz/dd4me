@@ -1,29 +1,43 @@
 $(document).ready(function () {
 
-var myForm = document.getElementById("createAccountForm");
-myForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const formData = new FormData(myForm);
-    let accountData = {};
-    for (var pair of formData.entries()) {
-        accountData[pair[0]] = pair[1];
-    }
+    var myForm = document.getElementById("createAccountForm");
+    myForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const formData = new FormData(myForm);
+        let accountData = {};
+        for (var pair of formData.entries()) {
+            accountData[pair[0]] = pair[1];
+        }
+        if(document.getElementById('btnuser')){
+            accountData.type = "rider";  
+          }else if(document.getElementById('btndriver')){
+              accountData.type = "driver";  
+          }
 
-    let response = await fetch('/api/createAccount', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(accountData)
-    });
-
-    //response check
-    //document.location('index.html.com');
-});
+          let options = {
+            method: 'POST',
+            headers: {
+                accept:'application/json',
+                'Content-Type':'application/json',
+                
+            },
+            body: JSON.stringify(accountData), 
+        };
+    
+        let accresponse = await fetch('/api/createAccount', options);
+        if(accresponse.status && accountData.type == "rider"){
+            console.log('User login Success!');
+            document.location= '/app-usermap.html';           
+        }else if(accresponse.status && accountData.type == "driver"){
+            console.log('Driver login Success!');
+            document.location= '/driver-app.html'; 
+        } 
 
     
-
-});
-
-
-
+        //response check
+        //document.location('index.html.com');
+    });
+    
+        
+    
+    });

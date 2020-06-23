@@ -44,12 +44,24 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user-login.html">Clients</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/driver-login.html">Drivers</a>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                      Clients
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                      <a class="dropdown-item" href="/user-create-account.html">Sign Up</a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                      Drivers
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                      <a class="dropdown-item" href="/driver-create-account.html">Sign Up</a>
+                    </div>
+                  </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contactus.html">Contact Us</a>
                 </li>
@@ -66,7 +78,7 @@
               </div>
               <div class=" features col-lg-6 border rounded">
                 <div class="tittle-account">
-                    Client Sign In Account 
+                     Sign In
                  </div>
                 <form id="loginForm">
                     <div class="form-group col-md-10 logmargin">
@@ -82,17 +94,18 @@
                     <input name="login" type="hidden" value="login"/> 
                     <div class="col text-center">
                         <p id="message" style="color: #0026ff"></p>
-                        <button type="submit" id="btnuser">Sign In</button>
+                        <button class="btn-test btn btn-outline-secondary" type="submit" id="btnuser">Sign In</button>
                     </div>
                     <div class=" col-md-10 logmargin">
                         <a href="#" class="alert-link" id="logoutBtn" value="logout"> Logout</a>
                       </div><br>
                       <div class="col-md-10 logmargin">
-                        Don't have an account? <a href="user-create-account.html" class="alert-link"> Sign Up</a>
+                        Don't have an account? <br><a href="user-create-account.html" class="alert-link"> Sign Up as a Client</a> or
+                        <a href="driver-create-account.html" class="alert-link"> Sign Up as a Driver</a>
                       </div><br>
-                      <div class=" col-md-10 logmargin">
+                      <!-- <div class=" col-md-10 logmargin">
                         <a href="#" class="alert-link"> I forgot my password</a>
-                      </div><br>
+                      </div><br> -->
                 </form>
                 <!-- <button id="logoutBtn" value="logout">Logout</button> -->
               </div>

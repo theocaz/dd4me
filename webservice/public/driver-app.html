@@ -32,7 +32,7 @@
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
     type="text/css" /> -->
 
-  <script src="js/infotodriver.js" type="application/javascript"></script>
+  <script src="js/cookieinfo.js" type="application/javascript"></script>
   <script src="js/map.js" type="application/javascript"></script>
   <script src="js/driver.js" type="application/javascript"></script>
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -49,21 +49,33 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/user-login.html">Clients</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/driver-login.html">Drivers</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/contactus.html">Contact Us</a>
-        </li>
+          <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                Clients
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                <a class="dropdown-item" href="/user-create-account.html">Sign Up</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                Drivers
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                <a class="dropdown-item" href="/driver-create-account.html">Sign Up</a>
+              </div>
+            </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/contactus.html">Contact Us</a>
+          </li>
       </ul>
-    </div>
-  </nav>
+  </div>
+</nav>
 
   <div class="features-test">
     <div class="container"><br>
@@ -77,6 +89,7 @@
           <div class="form-group col-md-10">
             <label for="Name">Customer Name: </label>
             <label id="username" style="color: #0026ff"></label>
+            <label id="userlast" style="color: #0026ff"></label>
           </div>
 
           <div class="form-group col-md-10">

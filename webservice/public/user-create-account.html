@@ -43,12 +43,24 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user-login.html">Clients</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/driver-login.html">Drivers</a>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                      Clients
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                      <a class="dropdown-item" href="/user-create-account.html">Sign Up</a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"  data-toggle="dropdown">
+                      Drivers
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/user-login.html">Sign In</a>
+                      <a class="dropdown-item" href="/driver-create-account.html">Sign Up</a>
+                    </div>
+                  </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contactus.html">Contact Us</a>
                 </li>
@@ -108,11 +120,13 @@
                       <input type="checkbox" class="form-check-input" id="exampleCheck1" name="chkbox">
                       <label class="form-check-label" for="exampleCheck1">I accept the service conditions</label>
                     </div>
-                    <div class="col text-center"><button type="submit" class="btn">Create A Client Account</button></div>
+                    <div class="col text-center">         
+                        <button class="btn-test btn btn-outline-secondary" type="submit" id="btnuser">Create A Client Account</button>
+                    </div>
                     <div class="col-md-10 logmargin">
                         Do you have account? <a href="/user-login.html" class="alert-link"> Login Here</a>
                       </div>
-                    <button type="button" value="logout">Logout</button>
+                    <!-- <button type="button" value="logout">Logout</button> -->
                 </form>
               </div>
             </div>

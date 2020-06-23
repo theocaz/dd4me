@@ -9,11 +9,12 @@ $(document).ready(function () {
         for (var pair of formData.entries()) {
             accountData[pair[0]] = pair[1];
         }
+
         if(document.getElementById('btnuser')){
-          accountData.type = "rider";  
-        }else if(document.getElementById('btndriver')){
-            accountData.type = "driver";  
-        }
+            accountData.type = "rider";  
+          }else if(document.getElementById('btndriver')){
+              accountData.type = "driver";  
+          }
         
         let options = {
             method: 'POST',
@@ -25,17 +26,20 @@ $(document).ready(function () {
             body: JSON.stringify(accountData), 
         };
 
+        console.log('Cookies: '+document.cookie);
+
         let email = document.getElementById("InputEmail").value;
         let password = document.getElementById("InputPass").value;
         if (email == null || email == "" ||password == null || password == "") {
             alert("Please enter your email or password.");
+        }else if (document.cookie == null || document.cookie == "") {
+            alert("Your email or password are not correct.");
         }
-
         let loginresponse = await fetch('/api/login', options);
 
         if(loginresponse.status && accountData.type == "rider"){
             console.log('User login Success!');
-            document.location= '/app-usermap.html';            
+            document.location= '/app-usermap.html';           
         }else if(loginresponse.status && accountData.type == "driver"){
             console.log('Driver login Success!');
             document.location= '/driver-app.html'; 
@@ -51,6 +55,7 @@ $(document).ready(function () {
         }});
         if(response){
             console.log('logged out');
+            document.location= '/user-login.html';
         }
     
     });
