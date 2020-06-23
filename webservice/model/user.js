@@ -29,7 +29,7 @@ module.exports = {
     loginUserWithPass: async function(email, password){
         let conn = await db.getConnection();
         let passHash = crypto.createHash('sha1').update(password).digest('base64');
-        const result = await conn.query("SELECT `userID`, `email`, `passHash`, `type`, `fName`, `lName`, `phone` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
+        const result = await conn.query("SELECT `userID`, `email`, `passHash`, `type` FROM `dd4me`.`user` WHERE `email`=? AND `passHash` = ?",
             [email, passHash]);
         if(result[0] !== undefined){
             let cookieHash = crypto.createHash('sha1').update(Math.random().toString()).digest('base64');
@@ -116,22 +116,36 @@ module.exports = {
     },
 
     getClosestOnShiftAll: async function (user) {
-        let wantedShiftType;
+        let firstShiftType = "random";
+        let secondShiftType = "random";
+        let thirdShiftType = "random";
+
         if(user.shiftType == "both"){
-            wantedShiftType = "'both', 'primary', 'secondary'";
+
+            firstShiftType = "primary";
+            secondShiftType = "secondary";
+            thirdShiftType = "both";
         } else if (user.shiftType == "primary"){
-            wantedShiftType = "'both', 'secondary'";
+
+            secondShiftType = "secondary";
+            thirdShiftType = "both";
+        }else if(user.shiftType == "secondary"){
+ 
+            firstShiftType = "primary";
+            thirdShiftType = "both";
         }else{
-            wantedShiftType = "'both', 'primary'";
+            console.log("shift type error / not correct");
         }
 
         const conn = await db.getConnection();
-        const result = await conn.query("SELECT `fName`, `lName`, `phone`, `shiftType` FROM `dd4me`.`user` WHERE `inTeam` = false AND `onShift`= true AND `shiftType` IN (?) ORDER BY SQRT(POW(? - `currLocationLat`, 2) + POW(? - `currLocationLng`, 2))",
-            [wantedShiftType, user.locationLat, user.locationLng]);
+        const result = await conn.query("SELECT `userID`, `fName`, `lName`, `phone`, `shiftType`,`currLocationLat`, `currLocationLng` FROM `dd4me`.`user` WHERE `userID` != ? AND `inTeam` = false AND `onShift`= true AND `shiftType`  IN (?,?,?) ORDER BY SQRT(POW(? - `currLocationLat`, 2) + POW(? - `currLocationLng`, 2))",
+            [user.userID,firstShiftType, secondShiftType, thirdShiftType, user.locationLat, user.locationLng]);
 
         conn.end();
+
+        //console.log("direct query result:" + result[0].userID);
         if (result[0] !== undefined) {
-            return { status: true, driver: result[0] };
+            return { status: true, foundUser:result[0] };
         } else {
             return { status: false }
         }

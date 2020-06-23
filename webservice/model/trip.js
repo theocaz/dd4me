@@ -44,8 +44,8 @@ module.exports = {
     // add SET parameters for secondaryID and tripStatus = ongoing
     acceptRequest: async function(trip){
         let conn = await db.getConnection();
-        const result = await conn.query("UPDATE `trip` SET `primaryID` = ?, secondaryID = ?, tripStatus = ? WHERE tripID = ?;",
-            [trip.primaryID, trip.secondaryID, "ongoing", trip.tripID]);
+        const result = await conn.query("UPDATE `trip` SET `teamID` = ?, tripStatus = ? WHERE tripID = ?;",
+            [trip.teamID, "ongoing", trip.tripID]);
 
         conn.end();
         if (result.affectedRows === 1) {
@@ -58,7 +58,7 @@ module.exports = {
 
     lookForTrip: async function(){ // look for a requested trip to be accepted
         const conn = await db.getConnection();
-        const result = await conn.query("SELECT `tripID`, `requesterID`, `primaryID`, `secondaryID`, `originLat`, `originLng`, `destLat`, `destLng` FROM `dd4me`.`trip` WHERE `tripStatus`=?",
+        const result = await conn.query("SELECT `tripID`, `requesterID`, `teamID`, `originLat`, `originLng`, `destLat`, `destLng` FROM `dd4me`.`trip` WHERE `tripStatus`=?",
             ["requested"]);
 
         conn.end();
@@ -73,7 +73,7 @@ module.exports = {
 
     lookupTrip: async function(tripID){ //lookup trip info, could be useful to double check if trip was accepted inbetween requests
         const conn = await db.getConnection();
-        const result = await conn.query("SELECT `tripID`, `requesterID`, `primaryID`, `secondaryID`, `tripStatus`, `originLat`, `originLng`, `destLat`, `destLng` FROM `dd4me`.`trip` WHERE `tripID`=?",
+        const result = await conn.query("SELECT `tripID`, `teamID`, `secondaryID`, `tripStatus`, `originLat`, `originLng`, `destLat`, `destLng` FROM `dd4me`.`trip` WHERE `tripID`=?",
             [tripID]);
 
         conn.end();

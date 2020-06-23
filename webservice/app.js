@@ -49,6 +49,7 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 // 	let profile = data.profile;
 // 	let coords = data.coords;
 // 	let formatCoords = 'coordinates=';
+// 	console.log(coords);
 // 	coords.forEach(c => {
 // 		formatCoords += c[0] + ", " + c[1] +';'
 // 	});
@@ -58,7 +59,7 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 
 // 	console.log(formatCoords);
 // 	//let directions = 
-// 	axios.post('https://api.mapbox.com/directions/v5/' + profile + '?access_token=' + accessToken,
+// 	let responsed = axios.post('https://api.mapbox.com/directions/v5/' + profile + '?access_token=' + accessToken,
 // 		formatCoords
 // 		,
 // 		{
@@ -72,7 +73,7 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 // 		//console.log(err);
 // 		console.log(err.response);
 // 	})
-	
+// 	console.log("response in srv " +responsed.duration);
 
 // 	//send instructions to google
 // 	//https://www.google.com/maps/search/?api=1&query=47.5951518,-122.3316393
@@ -108,9 +109,12 @@ app.post('/api/shiftmanager/', async(req, res)=>{
 	
 	let data = req.body;
 	let driverCookies = req.cookies;
-	console.log(data.locationLat);
+
+	let teamPairResult;
+	let teamUnpairResult;
 	let response= {};
 	let result;
+	let teamResult;
 	let user = {
 		userID : driverCookies.uid,
 		ch : driverCookies.ch,
@@ -120,62 +124,102 @@ app.post('/api/shiftmanager/', async(req, res)=>{
 		locationLat: data.locationLat,
 		locationLng: data.locationLng
 	};
-	console.log(user.onShift);
+	console.log(user);
 	//toggle shift
-	result = await User.toggleShift(user);
+	toggleShiftResult = await User.toggleShift(user);
+	if(user.onShift){
+		teamPairResult = await Team.autoPairTeam(user);
 
-	teamResult = await Team.autoPairTeam();
-	
-	res.json(result);
+		if(teamPairResult.status){
+			user.inTeam = true;
+		}
+
+	}else{
+		teamUnpairResult = await Team.unpairTeam(user.userID);
+		console.log("teamResult unpair status: " + teamUnpairResult.status);
+	}
+	response.toggleShift = toggleShiftResult;
+	response.teamPairResult = teamPairResult;
+	response.teamUnpairResult = teamUnpairResult;
+	response.user = user;
+	console.log("teampair " ,user);
+	res.json({data:response});
 });
 
+app.post('/api/lookForTrip/', async (req,res) => {
+	let user = req.body.user;
+	let response;
+	//console.log("user:", user);
+	let result = await Trip.lookForTrip(user);
+	let data = await result;
+	console.log("tripdata id ",data.trip);
+	response = data;
+	if(data.status){
+		data.trip.teamID = user.teamID;
+		let requestAccept = await Trip.acceptRequest(data.trip);
+
+		console.log("trip accepted ", requestAccept);
+	}else{
+		response.status = false;
+	}
+	res.json(response);
+});
 
 app.post('/api/requestride/', async(req, res)=>{
-	console.log(req.user);
+	//console.log(req.user);
 	if(req.user.status){
 
 		let tripRequest = {...req.body,...req.user.user};
 
 		let tripResult = await Trip.newRequest(tripRequest);
-		
-		//ask driver if interested
-		console.log(tripResult);
-		res.json({'status':'ok'});
+		console.log(tripResult.status);
+		let actvresp = Team.getActiveTeams();
+		console.log("actvt "+actvresp);
+		if(tripResult.status){
+			tripResult.trip.team = Team.getClosestTeam(tripResult.trip.originLat, tripResult.trip.originLng ); //get closest team to trip origin
+		}
+		console.log("closest team: " + tripResult.trip.team.teamID)
+		//console.log("trip result is:" + tripResult.trip.price);
+
+		res.json({'status':true, trip:tripResult.trip});
 	}else{
 		res.json({"status":"unauthorised"});
-	}	
+	}
+	
 	
 });
+
+
+
 
 app.post('/api/logout/', async(req,res)=>{
 	res.clearCookie('uid');
 	res.clearCookie('ch');
-	res.clearCookie('name');
-	res.clearCookie('last');
-	res.clearCookie('phone');
-	res.clearCookie('email');
 	res.clearCookie('driver');
 	User.resetCookieHash(req.user.user.userID);
 	req.user = {status:false};
 	res.send('logged out');
-	res.json(req.user);
 });
 
 //driver: while driver logged in --> looking for rides(check db for ride requests)
 
 app.post('/api/login/', async(req, res)=>{
 
-	console.log('I have a Login request');
-	console.log(req.body);
-	console.log(req.user);
-	console.log(req.cookies);
+	//console.log('I have a Login request');
+	//console.log(req.body);
+	//console.log(req.user);
+
 	
 	if(req.user.status){
-		console.log('Logeado');
+		//console.log('Logeado');
 		res.json(req.user);
 	}else {
-		console.log('No Logeado');
+		//console.log('No Logeado');
 	} 
+	//if(req.user.user.driver){
+		//login as driver
+	//}
+	//res.json(req.user);
 
 });
 
@@ -183,14 +227,13 @@ app.post('/api/login/', async(req, res)=>{
 app.post('/api/createAccount/', async(req, res) => { //riders
 	let data = req.body;
 	console.log(data);
-	console.log(req.user);
 	let user = {
 		email: data.email,
 		pass: data.password,
 		fname: data.fname,
 		lname: data.lname,
 		phone: data.phone,
-		type: "rider",
+		type: 'rider'
 	};
 	console.log(user);
 	let userResult = await User.createUser(user);
@@ -198,21 +241,15 @@ app.post('/api/createAccount/', async(req, res) => { //riders
 
 		let loginResult = await User.loginUserWithPass(user.email, user.pass);
 		if(loginResult.status){
-
 			res.cookie('uid', user.userID, { maxAge: 1000 * 60 * 60 * 24 });
-            res.cookie('name', user.fname, { maxAge: 1000 * 60 * 60 * 24 });
-            res.cookie('last', user.lname, { maxAge: 1000 * 60 * 60 * 24 });
-            res.cookie('email', user.email, { maxAge: 1000 * 60 * 60 * 24 });
-            res.cookie('phone', user.phone, { maxAge: 1000 * 60 * 60 * 24 });
-            res.cookie('ch', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24 });
-			
+			res.cookie('ch', loginResult.cookieHash, { maxAge: 1000 * 60 * 60 * 24});
 		}
 
 	}else{
 		//did not work
 	}
+	res.json(user);
 	
-	res.json(data);
 });
 
 //Stripe Payment Module
@@ -226,7 +263,7 @@ app.post('/pay', (req,res) =>{
 		data,
 	});
 
-	let price = data.money;
+	let price = data.origin;
 	console.log('Precio: '+price);
 
 app.post('/payment', (req,res) =>{

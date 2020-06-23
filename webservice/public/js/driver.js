@@ -1,8 +1,11 @@
 const state = {};
+var globalUser;
+let tripSearch;
 $(document).ready(function () {
     var onShift = false;
     var shiftType;
     var shiftTypeInfo;
+    
     var onShiftToggle = document.getElementById('onShiftToggle');
     onShiftToggle.addEventListener('click', async function () {
         primaryCheck = document.getElementById('primaryDriverID').checked;
@@ -34,7 +37,7 @@ $(document).ready(function () {
 
         }
         const location = await getLocation();
-        console.log(location.coords.latitude);
+        //console.log(location.coords.latitude);
         let response = await fetch('/api/shiftmanager', {
             method: 'post',
             headers: {
@@ -42,10 +45,22 @@ $(document).ready(function () {
             },
             body: JSON.stringify({ onShift, shiftType, locationLat: location.coords.latitude, locationLng : location.coords.longitude })
         });
+        let data = await response.json();
         //check if response stauts is ok then update
         
+        globalUser = data.data.user;
+        console.log(globalUser); //undefined
+        if(onShift){
+            tripSearch = setInterval(lookForTrip, 5000);
+        }else if(onShift==false){
+            clearInterval(tripSearch);
+        }
+
+       
         
     });
+
+
 
 
     getLocation = function(){
@@ -62,3 +77,20 @@ $(document).ready(function () {
     
 
 });
+
+lookForTrip = async function () {
+    //check db for trip with teamnumber
+    //console.log("in lft client ", globalUser);
+    let response = await fetch('/api/lookForTrip', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user: globalUser })
+    });
+    let data = await response.json();
+    console.log(data);
+    if(data.status){
+        clearInterval(tripSearch)
+    }
+};
