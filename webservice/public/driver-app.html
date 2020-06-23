@@ -111,6 +111,25 @@
             <label for="vehicle2"> Secondary Driver</label><br>
             <button id="onShiftToggle">Toggle shift</button>
           </div>
+          <div class=" col-md-10">
+            <a href="/user-login.html" class="alert-link" id="logoutBtn" value="logout"> Logout</a>
+        </div><br>
+        <script>
+            logoutBtn = document.getElementById('logoutBtn');
+            logoutBtn.addEventListener('click', async function (e) {
+                let response = await fetch('/api/logout', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (response) {
+                    console.log('logged out');
+                    document.location = '/user-login.html';
+                }
+
+            });
+        </script>
           </div>
 
         </div>
