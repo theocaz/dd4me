@@ -157,11 +157,13 @@ app.post('/api/lookForTrip/', async (req,res) => {
 	if(data.status){
 		data.trip.teamID = user.teamID;
 		let requestAccept = await Trip.acceptRequest(data.trip);
-
+		let customerInfo = await User.lookupUser(data.trip.requesterID);
+		response.customerInfo = customerInfo;
 		console.log("trip accepted ", requestAccept);
 	}else{
 		response.status = false;
 	}
+	console.log("cst info " ,response.customerInfo);
 	res.json(response);
 });
 

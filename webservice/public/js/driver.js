@@ -1,7 +1,13 @@
 const state = {};
 var globalUser;
 let tripSearch;
+let customerfName;
+let customerlName;
+let customerPhone;
 $(document).ready(function () {
+    customerfName = document.getElementById('username');
+    customerPhone = document.getElementById("userphone");
+    customerlName = document.getElementById('userlast');
     var onShift = false;
     var shiftType;
     var shiftTypeInfo;
@@ -91,6 +97,22 @@ lookForTrip = async function () {
     let data = await response.json();
     console.log(data);
     if(data.status){
+        markers.push(new mapboxgl.Marker({
+            color: "green"
+        })
+            .setLngLat([data.trip.originLng, data.trip.originLat])
+            .addTo(map)
+        );
+        markers.push(new mapboxgl.Marker({
+            color: "red"
+        })
+            .setLngLat([data.trip.destLng, data.trip.destLat])
+            .addTo(map)
+        );
+        customerfName.innerText = data.customerInfo.user.fName;
+        customerlName.innerText = data.customerInfo.user.lName;
+        customerPhone.innerText = data.customerInfo.user.phone;
+
         clearInterval(tripSearch)
     }
 };
