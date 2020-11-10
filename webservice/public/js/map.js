@@ -349,11 +349,11 @@ window.addEventListener('load', async() => {
                 },
                 (err) => {
                     console.log(err);
-                    backupGeoLocate();
+                    //backupGeoLocate();
                 }
             );
         } else {
-            backupGeoLocate();
+            //backupGeoLocate();
         }
     }
     getPosition();
