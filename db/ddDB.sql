@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `team` (
   PRIMARY KEY (`teamID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table dd4me.team: ~27 rows (approximately)
+-- Dumping data for table dd4me.team: ~69 rows (approximately)
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
 INSERT INTO `team` (`teamID`, `primaryID`, `secondaryID`, `isActive`, `pairedOn`, `disbandedOn`, `currLocationLat`, `currLocationLng`) VALUES
 	(1, 24, 19, 0, '2020-06-22 22:14:19', '2020-06-22 23:27:38', NULL, NULL),
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `trip` (
   KEY `userID` (`requesterID`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table dd4me.trip: ~22 rows (approximately)
+-- Dumping data for table dd4me.trip: ~9 rows (approximately)
 /*!40000 ALTER TABLE `trip` DISABLE KEYS */;
 INSERT INTO `trip` (`tripID`, `teamID`, `requesterID`, `tripStatus`, `originLat`, `originLng`, `destLat`, `destLng`, `price`) VALUES
 	(44, 65, 24, 'ongoing', '45.411091', '-75.859212', '45.412021', '-75.853838', 0),
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table dd4me.user: ~5 rows (approximately)
+-- Dumping data for table dd4me.user: ~8 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`userID`, `email`, `passHash`, `cookieHash`, `fName`, `lName`, `type`, `phone`, `amtLastTrip`, `amtSinceLastPay`, `onShift`, `shiftType`, `inTeam`, `currLocationLat`, `currLocationLng`) VALUES
 	(5, 'bob@gmail.com', 'CkK2udzVafmQ3N5A9P9zxaJOuQQ=', 'jjUKfRPE4ikwcQlUD2NwBPSSbF8=', 'bobby', 'bobberson', 'driver', '', NULL, NULL, 0, 'primary', 0, 45.4511, -75.7611),
