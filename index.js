@@ -1,6 +1,7 @@
 const dotenv = require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const PORT = process.env.PORT || 5000
 const axios = require('axios');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -12,7 +13,8 @@ const Trip = require('./model/trip');
 const Team = require('./model/team');
 const db = require('./dbConn/db');
 const login = require("./middleware/login");
-const PORT = process.env.PORT || 5000
+
+
 let accessToken =
 	'pk.eyJ1IjoidGhlb2NheiIsImEiOiJja2EyaXBudm4wNzVwM2Vtc2JyYWdxbzR2In0.RTa6vNKcqbOV9W9dOmybew';
 
