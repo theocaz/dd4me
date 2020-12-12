@@ -8,11 +8,11 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = 9000;
 const bodyParser = require('body-parser');
-const User = require('./model/user');
-const Trip = require('./model/trip');
-const Team = require('./model/team');
-const db = require('./dbConn/db');
-const login = require("./middleware/login");
+const User = require('../model/user');
+const Trip = require('../model/trip');
+const Team = require('../model/team');
+const db = require('../dbConn/db');
+const login = require("../middleware/login");
 
 
 let accessToken =
