@@ -8,11 +8,11 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = 9000;
 const bodyParser = require('body-parser');
-const User = require('../model/user');
-const Trip = require('../model/trip');
-const Team = require('../model/team');
-const db = require('../dbConn/db');
-const login = require("../middleware/login");
+const User = require('./model/user');
+const Trip = require('./model/trip');
+const Team = require('./model/team');
+const db = require('./dbConn/db');
+const login = require("./middleware/login");
 
 
 let accessToken =
@@ -45,7 +45,7 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 
  
 // NOT IN USE - WILL REDIRECT TO GOOGLE MAPS FOR STEP BY STEP DIRECTIONS---------------------------
-
+// For turn by turn instructions
 // app.post('/api/getdirections', async (req, res) => {
 // 	//console.log(req);
 // 	let data = req.body;
