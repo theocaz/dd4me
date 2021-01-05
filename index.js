@@ -216,10 +216,10 @@ app.post('/api/login/', async(req, res)=>{
 
 	
 	if(req.user.status){
-		//console.log('Logeado');
+		//console.log('logged in');
 		res.json(req.user);
 	}else {
-		//console.log('No Logeado');
+		//console.log('not logged in');
 	} 
 	//if(req.user.user.driver){
 		//login as driver

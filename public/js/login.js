@@ -39,10 +39,10 @@ $(document).ready(function () {
 
         if(loginresponse.status && accountData.type == "rider"){
             console.log('User login Success!');
-            document.location= '/app-usermap.html';           
+            document.location= '/html/app-usermap.html';           
         }else if(loginresponse.status && accountData.type == "driver"){
             console.log('Driver login Success!');
-            document.location= '/driver-app.html'; 
+            document.location= '/html/driver-app.html'; 
         }           
     });
 
@@ -55,7 +55,7 @@ $(document).ready(function () {
         }});
         if(response){
             console.log('logged out');
-            document.location= '/user-login.html';
+            document.location= '/html/user-login.html';
         }
     
     });
