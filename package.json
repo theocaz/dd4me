@@ -1,11 +1,11 @@
 {
     "name": "express-first",
     "version": "1.0.0",
-    "description": "first express app",
-    "main": "app.js",
+    "description": "DD4ME",
+    "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "npx nodemon app.js"
+        "start": "node server.js"
     },
     "repository": {
         "type": "git",
