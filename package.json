@@ -1,7 +1,7 @@
 {
-    "name": "express-first",
+    "name": "DD4ME",
     "version": "1.0.0",
-    "description": "DD4ME",
+    "description": "DD4ME app",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,5 +28,10 @@
     "devDependencies": {
         "nodemon": "^2.0.7",
         "sequelize-cli": "^5.5.1"
+    },
+
+    "engines": {
+        "node": ">= 6.9.4",
+        "npm": ">= 4.4.0"
     }
 }

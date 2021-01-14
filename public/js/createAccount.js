@@ -26,11 +26,11 @@ $(document).ready(function () {
     
         let accresponse = await fetch('/api/createAccount', options);
         if(accresponse.status && accountData.type == "rider"){
-            console.log('User login Success!');
-            document.location= '/app-usermap.html';           
+            console.log('User Account Created!');
+            document.location= '../html/app-usermap.html';           
         }else if(accresponse.status && accountData.type == "driver"){
-            console.log('Driver login Success!');
-            document.location= '/driver-app.html'; 
+            console.log('Driver Account Created!');
+            document.location= '../html/driver-app.html'; 
         } 
 
     
