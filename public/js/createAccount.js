@@ -35,8 +35,8 @@ $(document).ready(function () {
 
     
         //response check
-        //document.location('index.html.com');
-    });
+        //document.location('index.html');
+    }).catch(err => { console.log(err) });
     
         
     

@@ -38,6 +38,8 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
 app.use(login);
 app.use('/',express.static(path.join(__dirname, 'public')));
+//app.use('/', express.static('public'));
+/////////////////////////////
 
 
 
