@@ -32,16 +32,16 @@
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
     type="text/css" /> -->
 
-  <script src="js/cookieinfo.js" type="application/javascript"></script>
-  <script src="js/map.js" type="application/javascript"></script>
-  <script src="js/driver.js" type="application/javascript"></script>
+  <script src="../js/cookieinfo.js" type="application/javascript"></script>
+  <script src="../js/map.js" type="application/javascript"></script>
+  <script src="../js/driver.js" type="application/javascript"></script>
   <link rel="stylesheet" type="text/css" href="../css/style.css" />
   <title>DD4me - App Driver</title>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg border-bottom">
-    <a class="navbar-brand" href="#"><img src="/img/logo.jpg" class="img-fluid" /></a>
+    <a class="navbar-brand" href="#"><img src="../img/logo.jpg" class="img-fluid" /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -121,7 +121,7 @@
                 });
                 if (response) {
                     console.log('logged out');
-                    document.location = '/user-login.html';
+                    document.location = 'user-login.html';
                 }
 
             });
