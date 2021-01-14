@@ -42,9 +42,26 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 /////////////////////////////
 
 
+//Postgres connection
+const { Client } = require('pg');
 
+const client = new Client({
+	connectionString: process.env.DATABASE_URL,
+	ssl: {
+		rejectUnauthorized: false
+	}
+});
 
+client.connect();
 
+client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+	if (err) throw err;
+	for (let row of res.rows) {
+		console.log(JSON.stringify(row));
+	}
+	client.end();
+});
+/////////////////////
  
 // NOT IN USE - WILL REDIRECT TO GOOGLE MAPS FOR STEP BY STEP DIRECTIONS---------------------------
 // For turn by turn instructions
@@ -229,6 +246,7 @@ app.post('/api/login/', async(req, res)=>{
 	//res.json(req.user);
 
 });
+
 
 
 app.post('/api/createAccount/', async(req, res) => { //riders
