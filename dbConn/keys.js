@@ -1,10 +1,11 @@
-// put in your db connection settings
+// db keys
+//jawsdb
 module.exports = {
-host: "ec2-54-85-13-135.compute-1.amazonaws.com",
-database: "ddrqovmbchidj0",
-user: "dgrvwdjftroipm",
-port: "5432",
-password: "09e92314127997d08c751ab5a74c02c211e23171decc45e2aba7868e1572f013"
+  host: "127.0.0.1",
+  user: "root",
+  password: "",
+  connectionLimit: 5,
+  database: "dd4me"
   
 };
 
@@ -15,7 +16,7 @@ database: "ddrqovmbchidj0",
 user: "dgrvwdjftroipm",
 port: "5432",
 password:"09e92314127997d08c751ab5a74c02c211e23171decc45e2aba7868e1572f013"
-URI: "postgres://dgrvwdjftroipm:09e92314127997d08c751ab5a74c02c211e23171decc45e2aba7868e1572f013@ec2-54-85-13-135.compute-1.amazonaws.com:5432/ddrqovmbchidj0"
+
 Heroku JawsDB:
   host: "klbcedmmqp7w17ik.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
   user: "bv36byf4elf4ylic",

@@ -39,10 +39,10 @@ $(document).ready(function () {
 
         if(loginresponse.status && accountData.type == "rider"){
             console.log('User login Success!');
-            document.location= '/html/app-usermap.html';           
+            document.location= '../html/app-usermap.html';           
         }else if(loginresponse.status && accountData.type == "driver"){
             console.log('Driver login Success!');
-            document.location= '/html/driver-app.html'; 
+            document.location= '../html/driver-app.html'; 
         }           
     });
 

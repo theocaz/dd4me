@@ -41,27 +41,35 @@ app.use('/',express.static(path.join(__dirname, 'public')));
 //app.use('/', express.static('public'));
 /////////////////////////////
 
-
 //Postgres connection
+try{
 const { Client } = require('pg');
+	client = new Client({
+		connectionString: process.env.DATABASE_URL,
+		ssl: {
+			rejectUnauthorized: false
+		}
+	});
 
-const client = new Client({
-	connectionString: process.env.DATABASE_URL,
-	ssl: {
-		rejectUnauthorized: false
-	}
-});
 
-client.connect();
 
-client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+	client.connect();
+
+	client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
 	if (err) throw err;
 	for (let row of res.rows) {
 		console.log(JSON.stringify(row));
 	}
 	client.end();
-});
-/////////////////////
+	});
+	client.end();
+}catch(err) {
+	console.log(err);
+}
+
+
+
+
  
 // NOT IN USE - WILL REDIRECT TO GOOGLE MAPS FOR STEP BY STEP DIRECTIONS---------------------------
 // For turn by turn instructions
