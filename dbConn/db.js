@@ -25,10 +25,14 @@ module.exports = {
     }
   },
   closeConnection: async function(){
-    this.pool.end(function (err) {
+    if(this.connected){
+      return await this.pool.end(function (err) {
       // all connections in the pool have ended
       console.log(err);
-    });
+      });
+    } else {
+      console.log("Database not connected!");
+    }
   }
 
 };
