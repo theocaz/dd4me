@@ -5,11 +5,12 @@ module.exports = {
   user: "bv36byf4elf4ylic",
   password: "ksj049y94e828tdq",
   connectionLimit: 5,
+  port: 3306,
   database: "u3yikfybcx1baovi"
   
 };
 
-/*
+/* 
 Heroku Postgres:
 host: "ec2-54-85-13-135.compute-1.amazonaws.com",
 database: "ddrqovmbchidj0",
