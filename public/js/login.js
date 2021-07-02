@@ -44,7 +44,7 @@ $(document).ready(function () {
             console.log('Driver login Success!');
             document.location= '../html/driver-app.html'; 
         }           
-    });
+    }).catch((e)=>console.log(e));
 
     logoutBtn = document.getElementById('logoutBtn');
     logoutBtn.addEventListener('click', async function (e) {
@@ -58,5 +58,5 @@ $(document).ready(function () {
             document.location= '/html/user-login.html';
         }
     
-    });
+    }).catch((e) => console.log(e));
 });
