@@ -8,7 +8,7 @@ module.exports = {
   init: function() {
     try {
     
-      this.pool = dbe.createConnection(dbOpt);
+      this.pool = dbe.createPool(dbOpt);
       this.connected = true;
     } catch (e) {
       console.log(e);
