@@ -327,4 +327,7 @@ app.listen(port, () => {
 	console.log(`listening on port: ${port}`);
 });
 
-
+process.on('beforeExit', (params) => {
+	db.closeConnection();
+	console.log('Closing db connections: ');
+});

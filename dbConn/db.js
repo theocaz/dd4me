@@ -1,11 +1,14 @@
 const dbe = require("mariadb");
 const dbOpt = require("./keys");
+var mysql = require('mysql');
+
 
 module.exports = {
   connected: false,
   init: function() {
     try {
-      this.pool = dbe.createPool(dbOpt);
+    
+      this.pool = dbe.createConnection(dbOpt);
       this.connected = true;
     } catch (e) {
       console.log(e);
@@ -20,8 +23,13 @@ module.exports = {
     } else {
       console.log("Database not connected!");
     }
+  },
+  closeConnection: async function(){
+    this.pool.end(function (err) {
+      // all connections in the pool have ended
+      console.log(err);
+    });
   }
-
 
 };
 
