@@ -7,6 +7,10 @@ yarn-error.log*
 lerna-debug.log*
 
 
+#custom
+dbConn/
+db/
+
 #secure data
 config/db.js
 
